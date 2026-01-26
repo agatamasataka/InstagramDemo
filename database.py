@@ -107,6 +107,14 @@ class DatabaseManager:
         if 'client_id' not in cols: cursor.execute("ALTER TABLE schedules ADD COLUMN client_id INTEGER")
         if 'store_id' not in cols: cursor.execute("ALTER TABLE schedules ADD COLUMN store_id INTEGER")
         
+        # 4. Settings Table
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT
+        )
+        ''')
+
         conn.commit()
         
         # Ensure Default Client exists
@@ -127,15 +135,45 @@ class DatabaseManager:
     def import_schedules_from_csv(self, file_path, store_name_arg=None):
         """
         Imports schedules from a CSV file.
-        Expected CSV format:
-        Header: date, time, store_name, type
+        Robustly handles metadata rows before the actual header.
+        Expected columns: 日付, 投稿時間, 店舗, 種別, テキスト/本文
         """
         count = 0
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
             
-            with open(file_path, mode='r', encoding='utf-8') as f:
+            # 1. Find the header row index
+            header_row_index = 0
+            encodings = ['utf-8', 'cp932', 'shift_jis']
+            
+            found_header = False
+            encoding_used = 'utf-8'
+            
+            # Try to determine encoding and header offset
+            for enc in encodings:
+                try:
+                    with open(file_path, mode='r', encoding=enc) as f:
+                        lines = f.readlines()
+                        for i, line in enumerate(lines):
+                            if "日付" in line or "date" in line.lower():
+                                header_row_index = i
+                                found_header = True
+                                encoding_used = enc
+                                break
+                    if found_header: break
+                except UnicodeDecodeError:
+                    continue
+            
+            if not found_header:
+                return False, "有効なヘッダー行（'日付' または 'date' を含む行）が見つかりませんでした。"
+
+            # 2. Parse from the header row
+            with open(file_path, mode='r', encoding=encoding_used) as f:
+                # Skip to header
+                for _ in range(header_row_index):
+                    next(f)
+                
                 reader = csv.DictReader(f)
                 
                 for row in reader:
@@ -143,28 +181,58 @@ class DatabaseManager:
                     time_val = None
                     store_val = store_name_arg
                     type_val = None
+                    content_val = None
                     
+                    # Fuzzy match keys
                     for k, v in row.items():
                         if not k: continue
                         k_lower = k.lower()
+                        v_str = str(v).strip()
+                        
                         if 'date' in k_lower or '日付' in k_lower:
-                            date_val = v.strip()
+                            date_val = v_str
                         elif 'time' in k_lower or '時間' in k_lower:
-                            time_val = v.strip()
+                            time_val = v_str
                         elif ('store' in k_lower or '店舗' in k_lower) and not store_name_arg:
-                            store_val = v.strip()
+                            store_val = v_str
                         elif 'type' in k_lower or '種別' in k_lower:
-                            type_val = v.strip()
+                            type_val = v_str
+                        elif any(x in k_lower for x in ['text', 'content', 'caption', '本文', 'キャプション']):
+                            content_val = v_str
                     
+                    # Validation: Required fields check
                     if date_val:
-                        # If store_val is still None, use a default or skip? 
-                        # User wants per-store import, so store_val should likely be provided via arg or csv
+                        # Fix date format if necessary (e.g., "1月7日" -> "2026-01-07")
+                        # Assuming current year or next occurrence?
+                        # For now, store exactly as is, or try simple normalize.
+                        # If "1月7日" format, append year? 
+                        # Let's keep it simple string for now to avoid parsing errors, 
+                        # BUT ScheduleView expects YYYY-MM-DD for sorting/display logic sometimes.
+                        # Let's try to convert "1月7日" to "2026-01-07" if needed.
+                        # The user CSV has "2025/12/24" in metadata but "1月7日" in data.
+                        # Assuming "current/next season". Let's guess 2026 based on context or current year.
+                        
+                        import re
+                        m = re.match(r'(\d+)月(\d+)日', date_val)
+                        if m:
+                            # Naive year assumption: 2026 based on metadata context
+                            date_val = f"2026-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
+                        
+                        m2 = re.match(r'(\d+)/(\d+)/(\d+)', date_val)
+                        if m2:
+                           date_val = f"{m2.group(1)}-{int(m2.group(2)):02d}-{int(m2.group(3)):02d}"
+
                         if not store_val: store_val = "Unknown Store"
                         
+                        text_id = None
+                        if content_val:
+                            cursor.execute("INSERT INTO texts (content, genre) VALUES (?, ?)", (content_val, "インポート"))
+                            text_id = cursor.lastrowid
+
                         cursor.execute('''
-                            INSERT INTO schedules (target_date, post_time, store_name, post_type, status)
-                            VALUES (?, ?, ?, ?, ?)
-                        ''', (date_val, time_val, store_val, type_val, "未完了"))
+                            INSERT INTO schedules (target_date, post_time, store_name, post_type, status, text_id)
+                            VALUES (?, ?, ?, ?, ?, ?)
+                        ''', (date_val, time_val, store_val, type_val, "未確認", text_id))
                         count += 1
             
             conn.commit()
@@ -207,13 +275,27 @@ class DatabaseManager:
         except Exception as e:
             return False, f"エラー: {str(e)}"
 
+    def add_text(self, content, genre="AI生成"):
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO texts (content, genre) VALUES (?, ?)", (content, genre))
+        conn.commit()
+        conn.close()
+
     def add_schedule(self, target_date, post_time, store_name, post_type, client_id=None, store_id=None):
         conn = self.get_connection()
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO schedules (target_date, post_time, store_name, post_type, status, client_id, store_id)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (target_date, post_time, store_name, post_type, "未完了", client_id, store_id))
+        ''', (target_date, post_time, store_name, post_type, "未対応", client_id, store_id))
+        conn.commit()
+        conn.close()
+
+    def update_status(self, schedule_id, status):
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE schedules SET status = ? WHERE id = ?", (status, schedule_id))
         conn.commit()
         conn.close()
 
@@ -438,5 +520,20 @@ class DatabaseManager:
         conn = self.get_connection()
         cursor = conn.cursor()
         cursor.execute("DELETE FROM stores WHERE id = ?", (store_id,))
+        conn.commit()
+        conn.close()
+
+    def get_setting(self, key):
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
+        res = cursor.fetchone()
+        conn.close()
+        return res[0] if res else None
+
+    def set_setting(self, key, value):
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key, value))
         conn.commit()
         conn.close()
