@@ -1,0 +1,3 @@
+#!/bin/bash
+cd "/Users/masatakaagata/InstagramDemo"
+"/opt/anaconda3/bin/python3" main.py

@@ -1,6 +1,10 @@
 import customtkinter as ctk
 from database import DatabaseManager
 from theme import BrandColors, BUTTON_CONFIG, HEADER_LABEL_CONFIG
+<<<<<<< HEAD
+=======
+from views.ai_generator import AIGeneratorModal
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
 
 class TextView(ctk.CTkFrame):
     def __init__(self, master, db: DatabaseManager, client_id):
@@ -26,9 +30,19 @@ class TextView(ctk.CTkFrame):
         self.store_combo.pack(side="left", padx=10)
         self.load_stores()
 
+<<<<<<< HEAD
         # Add Button
         self.add_btn = ctk.CTkButton(self.header_frame, text="+ 新規作成", command=self.open_add_modal, width=120, **BUTTON_CONFIG)
         self.add_btn.pack(side="right", padx=10)
+=======
+        # AI Generate Button (Replaces manual Add)
+        def open_ai():
+            AIGeneratorModal(self, self.db, on_save_callback=self.load_data)
+        
+        self.ai_btn = ctk.CTkButton(self.header_frame, text="✨ 素材生成", command=open_ai, width=120,
+                                    fg_color="#7B1FA2", hover_color="#6A1B9A", font=("M PLUS Rounded 1c", 13, "bold"), height=36)
+        self.ai_btn.pack(side="right", padx=10)
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
         
         # Import CSV Button
         self.import_btn = ctk.CTkButton(self.header_frame, text="📄 CSV取込", command=self.import_csv, width=100, 

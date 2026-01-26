@@ -43,8 +43,17 @@ class PostBuilderModal(ctk.CTkToplevel):
         self.frame_txt = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
         self.frame_txt.grid(row=0, column=1, sticky="nsew", padx=1, pady=0)
         
+<<<<<<< HEAD
         ctk.CTkLabel(self.frame_txt, text="📝 テキストを選択", font=("M PLUS Rounded 1c", 16, "bold"), text_color=BrandColors.PRIMARY).pack(pady=10)
         
+=======
+        ctk.CTkLabel(self.frame_txt, text="📝 テキストを選択", font=("M PLUS Rounded 1c", 16, "bold"), text_color=BrandColors.PRIMARY).pack(pady=(10, 5))
+        ctk.CTkButton(self.frame_txt, text="✨ AIで生成する", command=self.open_ai_generator,
+                      width=120, height=28, fg_color="#E0F7FA", text_color="#006064", hover_color="#B2EBF2",
+                      font=("M PLUS Rounded 1c", 12, "bold")).pack(pady=(0, 10))
+                      
+
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
         genres = ["すべて"] + list(set([t['genre'] for t in self.db.fetch_texts() if t['genre']]))
         if len(genres) > 5: genres = genres[:5]
         
@@ -71,10 +80,26 @@ class PostBuilderModal(ctk.CTkToplevel):
         self.p_txt_box = ctk.CTkTextbox(self.phone, height=150, fg_color="transparent", font=("M PLUS Rounded 1c", 11), text_color="#333", wrap="word")
         self.p_txt_box.pack(fill="both", padx=10)
         
+<<<<<<< HEAD
         self.btn_save = ctk.CTkButton(self.frame_prev, text="この内容で決定", font=("M PLUS Rounded 1c", 16, "bold"), 
                                       height=50, fg_color=BrandColors.PRIMARY, hover_color=BrandColors.CTA_HOVER,
                                       command=self.save_and_close)
         self.btn_save.pack(side="bottom", fill="x", padx=20, pady=30)
+=======
+        # Actions
+        action_frame = ctk.CTkFrame(self.frame_prev, fg_color="transparent")
+        action_frame.pack(side="bottom", fill="x", padx=20, pady=30)
+        
+        self.btn_save = ctk.CTkButton(action_frame, text="この内容で決定", font=("M PLUS Rounded 1c", 16, "bold"), 
+                                      height=50, fg_color=BrandColors.PRIMARY, hover_color=BrandColors.CTA_HOVER,
+                                      command=self.save_and_close)
+        self.btn_save.pack(side="top", fill="x", pady=(0, 10))
+        
+        ctk.CTkButton(action_frame, text="キャンセル", font=("M PLUS Rounded 1c", 14), 
+                      height=40, fg_color="transparent", border_width=1, border_color="#CCC", 
+                      text_color="#555", hover_color="#EEE",
+                      command=self.destroy).pack(side="top", fill="x")
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
 
         self.all_images = self.db.fetch_images()
         self.all_texts = self.db.fetch_texts()
@@ -194,3 +219,26 @@ class PostBuilderModal(ctk.CTkToplevel):
         if self.on_save:
             self.on_save(self.selected_img_id, self.selected_txt_id)
         self.destroy()
+<<<<<<< HEAD
+=======
+
+    def open_ai_generator(self):
+        def on_generated():
+             # Reload texts
+             self.all_texts = self.db.fetch_texts()
+             self.populate_texts()
+             
+             # Select the latest text (Auto-apply)
+             try:
+                 cursor = self.db.conn.cursor()
+                 latest = cursor.execute("SELECT id, content FROM texts ORDER BY id DESC LIMIT 1").fetchone()
+                 if latest:
+                     self.selected_txt_id = latest[0]
+                     self.populate_texts(self.txt_tabs.get() if self.txt_tabs.get() != "すべて" else None)
+                     self.update_preview()
+             except:
+                 pass
+
+        from views.ai_generator import AIGeneratorModal
+        AIGeneratorModal(self, self.db, on_save_callback=on_generated, for_selection=True)
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b

@@ -45,20 +45,42 @@ class InstaManagerApp(ctk.CTk, TkinterDnD.DnDWrapper):
             w.destroy()
             
         # Navigation / Tabs
+<<<<<<< HEAD
         # Header with Breadcrumb or Back button
         header = ctk.CTkFrame(self.main_container, height=40, fg_color="transparent")
         header.pack(fill="x", padx=20, pady=(10, 0))
+=======
+        # Configure Main Grid
+        self.main_container.grid_columnconfigure(0, weight=1)
+        self.main_container.grid_columnconfigure(1, weight=0) # Preview Fixed
+        self.main_container.grid_rowconfigure(1, weight=1)
+
+        # Header -> Row 0, Col 0
+        header = ctk.CTkFrame(self.main_container, height=40, fg_color="transparent")
+        header.grid(row=0, column=0, sticky="ew", padx=20, pady=(10, 0))
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
         
         ctk.CTkButton(header, text="⬅ クライアント選択に戻る", command=self.show_client_view, 
                       fg_color="transparent", text_color="gray", width=100, anchor="w").pack(side="left")
         
+<<<<<<< HEAD
         ctk.CTkLabel(header, text=f"Client: {self.current_client['name']}", font=("M PLUS Rounded 1c", 14, "bold"), text_color="#333").pack(side="right")
 
         tab_view = ctk.CTkTabview(self.main_container, anchor="nw", corner_radius=15, 
+=======
+        # PREVIEW CONTAINER -> Row 0-2, Col 1 (Spans Header and Body)
+        self.preview_container = ctk.CTkFrame(self.main_container, width=350, fg_color="white", corner_radius=0)
+        self.preview_container.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
+        self.preview_container.pack_propagate(False)
+
+        # TABS -> Row 1, Col 0
+        self.tab_view = ctk.CTkTabview(self.main_container, anchor="nw", corner_radius=15, 
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
                                        fg_color=BrandColors.BG_LIGHT_MAIN, 
                                        segmented_button_selected_color=BrandColors.PRIMARY,
                                        segmented_button_selected_hover_color=BrandColors.CTA_HOVER,
                                        segmented_button_unselected_color="white",
+<<<<<<< HEAD
                                        text_color="gray30")
         tab_view.pack(fill="both", expand=True, padx=20, pady=10)
         
@@ -77,6 +99,34 @@ class InstaManagerApp(ctk.CTk, TkinterDnD.DnDWrapper):
         tab_text = tab_view.add("テキスト管理")
         self.text_view = TextView(tab_text, self.db, client_id=self.current_client['id'])
         self.text_view.pack(fill="both", expand=True)
+=======
+                                       text_color="gray30",
+                                       command=self.on_tab_changed)
+        self.tab_view.grid(row=1, column=0, sticky="nsew", padx=20, pady=(0, 10))
+        
+        # Tab 1: 進行管理 (Schedule)
+        tab_schedule = self.tab_view.add("進行管理コックピット")
+        # Pass client info to views, AND PREVIEW FRAME
+        self.schedule_view = ScheduleView(tab_schedule, self.db, client_id=self.current_client['id'], preview_frame=self.preview_container)
+        self.schedule_view.pack(fill="both", expand=True)
+        
+        # Tab 2: 素材管理 (Materials)
+        tab_material = self.tab_view.add("素材管理")
+        self.material_view = MaterialView(tab_material, self.db, client_id=self.current_client['id'])
+        self.material_view.pack(fill="both", expand=True)
+
+        # Footer for Client Name -> Row 2, Col 0
+        footer = ctk.CTkFrame(self.main_container, height=30, fg_color="transparent")
+        footer.grid(row=2, column=0, sticky="ew", padx=20, pady=(0, 10))
+        ctk.CTkLabel(footer, text=f"Client: {self.current_client['name']}", font=("M PLUS Rounded 1c", 12, "bold"), text_color="gray").pack(side="left")
+
+    def on_tab_changed(self):
+        selected = self.tab_view.get()
+        if selected == "進行管理コックピット":
+             self.preview_container.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
+        else:
+             self.preview_container.grid_remove()
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
 
 if __name__ == "__main__":
     app = InstaManagerApp()

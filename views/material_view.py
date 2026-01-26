@@ -71,9 +71,23 @@ class MaterialView(ctk.CTkFrame):
            self.drop_frame.dnd_bind('<<Drop>>', self.on_drop)
         except:
             pass
+<<<<<<< HEAD
         self.lbl_drop.bind("<Button-1>", self.open_file_dialog)
         self.drop_frame.bind("<Button-1>", self.open_file_dialog)
 
+=======
+        self.drop_frame.bind("<Button-1>", self.open_file_dialog)
+
+        # Import Folder Button
+        self.btn_import_folder = ctk.CTkButton(self.frame_images, text="☁️ Google Drive等のフォルダから一括取り込み", 
+                                               command=self.open_folder_import,
+                                               height=36,
+                                               fg_color="#FFF", border_width=1, border_color="#DDD",
+                                               text_color="#333", hover_color="#F5F5F5",
+                                               font=("M PLUS Rounded 1c", 12, "bold"))
+        self.btn_import_folder.pack(fill="x", padx=30, pady=(5, 10))
+
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
         # Gallery
         self.scroll_frame = ctk.CTkScrollableFrame(self.frame_images, fg_color=BrandColors.BG_WHITE, corner_radius=15)
         self.scroll_frame.pack(fill="both", expand=True, padx=30, pady=10)
@@ -94,7 +108,11 @@ class MaterialView(ctk.CTkFrame):
 
     def switch_mode(self, mode):
         if mode == "画像素材":
+<<<<<<< HEAD
             self.text_view_instance.pack_forget()
+=======
+            self.text_view_instance.grid_forget()
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
             self.frame_images.grid(row=0, column=0, sticky="nsew")
         else:
             self.frame_images.grid_forget()
@@ -132,12 +150,52 @@ class MaterialView(ctk.CTkFrame):
 
     def open_file_dialog(self, event=None):
         from tkinter import filedialog
+<<<<<<< HEAD
         file_paths = filedialog.askopenfilenames(filetypes=[("Images", "*.png;*.jpg;*.jpeg;*.gif")])
+=======
+        file_paths = filedialog.askopenfilenames(filetypes=[("Images", "*.png;*.jpg;*.jpeg;*.gif;*.webp")])
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
         if file_paths:
             for f in file_paths:
                 self.register_image(f)
             self.load_images()
 
+<<<<<<< HEAD
+=======
+    def open_folder_import(self):
+        from tkinter import filedialog, messagebox
+        folder_path = filedialog.askdirectory(title="取り込むフォルダ（Google Drive等）を選択")
+        if not folder_path: return
+        
+        # Valid extensions
+        exts = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"}
+        
+        files_to_import = []
+        for root, dirs, files in os.walk(folder_path):
+            for f in files:
+                if os.path.splitext(f)[1].lower() in exts:
+                    files_to_import.append(os.path.join(root, f))
+        
+        if not files_to_import:
+            messagebox.showinfo("インポート", "画像ファイルが見つかりませんでした。")
+            return
+            
+        if len(files_to_import) > 10:
+            if not messagebox.askyesno("確認", f"{len(files_to_import)} 件の画像が見つかりました。\n取り込みますか？\n（ファイルのコピーに時間がかかる場合があります）"):
+                return
+        
+        imported_count = 0
+        for fpath in files_to_import:
+            try:
+                self.register_image(fpath)
+                imported_count += 1
+            except Exception as e:
+                print(f"Skipped {fpath}: {e}")
+                
+        self.load_images()
+        messagebox.showinfo("完了", f"{imported_count} 件の画像を取り込みました。")
+
+>>>>>>> c5d2c25d7640490051c0d591eb838e91fa43e32b
     def register_image(self, file_path):
         file_path = file_path.strip('{}')
         if not os.path.exists(file_path): return
