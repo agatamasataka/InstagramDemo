@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locaop InstaManager System - HTML Demo</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- App Header with Logo -->
+        <div class="app-header" style="display:flex; align-items:center; margin-bottom:15px; padding-left:5px;">
+            <div
+                style="font-family: 'Inter', sans-serif; font-weight:800; font-size:24px; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display:flex; align-items:center; gap:10px;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="20" height="20" rx="6" stroke="url(#insta_grad)" stroke-width="2" />
+                    <circle cx="12" cy="12" r="5" stroke="url(#insta_grad)" stroke-width="2" />
+                    <circle cx="18" cy="6" r="1.5" fill="url(#insta_grad)" />
+                    <defs>
+                        <linearGradient id="insta_grad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#f09433" />
+                            <stop offset="0.25" stop-color="#e6683c" />
+                            <stop offset="0.5" stop-color="#dc2743" />
+                            <stop offset="0.75" stop-color="#cc2366" />
+                            <stop offset="1" stop-color="#bc1888" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                ロカスタGO
+            </div>
+        </div>
+
+        <!-- Main Tabs -->
+        <div class="tab-header">
+            <button class="tab-btn active" data-target="clients">案件一覧</button>
+            <button class="tab-btn" data-target="schedule">進行管理コックピット</button>
+            <button class="tab-btn" data-target="material">素材管理</button>
+            <button class="tab-btn" data-target="text">テキスト管理</button>
+            <button class="tab-btn" data-target="history">投稿履歴・競合分析</button>
+        </div>
+
+        <div class="tab-content">
+
+            <!-- PANEL: CLIENTS (New) -->
+            <div id="panel-clients" class="panel active">
+                <div class="panel-header">
+                    <div class="panel-title">案件一覧 (クライアント管理)</div>
+                    <div class="header-controls">
+                        <div style="flex:1;"></div>
+                        <button class="btn btn-black" onclick="alert('クライアント追加')">＋ 新規クライアント</button>
+                    </div>
+                </div>
+
+                <div class="client-list-container" style="padding-bottom:50px;">
+                    <!-- Filter/Summary Area -->
+                    <div class="client-summary-bar"
+                        style="display:flex; gap:15px; margin-bottom:20px; font-size:12px; color:#555;">
+                        <span id="summary-total">全案件: 0件</span>
+                        <span id="summary-attention" style="color:#d32f2f; font-weight:bold;">⚠️ 要対応: 0件</span>
+                    </div>
+
+                    <div class="client-table-header"
+                        style="display:grid; grid-template-columns: 2fr 1.5fr 1fr 2fr 1fr; gap:10px; padding:10px; background:#f5f5f5; border-radius:8px; font-size:12px; font-weight:bold; color:#555; margin-bottom:10px;">
+                        <div>クライアント名</div>
+                        <div>ステータス</div>
+                        <div>次回投稿日</div>
+                        <div>最新のアクティビティ</div>
+                        <div style="text-align:center;">アクション</div>
+                    </div>
+
+                    <div id="client-list-body" style="display:flex; flex-direction:column; gap:10px;">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: SCHEDULE -->
+            <div id="panel-schedule" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">進行管理</div>
+
+                    <div class="month-switcher">
+                        <button class="month-btn" onclick="switchMonth(-1)">◀</button>
+                        <span class="current-month" id="display-month">2026年02月</span>
+                        <button class="month-btn" onclick="switchMonth(1)">▶</button>
+                    </div>
+
+                    <div class="header-controls">
+                        <div style="flex:1;"></div>
+                        <button class="btn btn-black" id="btn-add-plan">＋ 予定登録</button>
+                    </div>
+                </div>
+
+                <div class="schedule-table">
+                    <div class="table-header">
+                        <div>日付</div>
+                        <div>時間</div>
+                        <div>カテゴリー</div>
+                        <div>コンテンツ (サムネイル+本文)</div>
+                        <div>ステータス</div>
+                        <div>編集</div>
+                    </div>
+                    <div class="table-body" id="schedule-list">
+                        <!-- JS injects rows -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: MATERIAL -->
+            <div id="panel-material" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">素材管理</div>
+                    <div class="header-controls">
+                        <button class="btn btn-outline" style="color:#4285F4; border-color:#4285F4;">＋
+                            Googleドライブ連携</button>
+                        <button class="btn btn-outline">＋ フォルダから追加</button>
+                        <div style="width:20px;"></div>
+                        <button class="btn btn-ai" id="btn-auto-tag">🏷️ AIでタグ付与</button>
+                    </div>
+                </div>
+                <div class="material-grid" id="material-grid">
+                    <!-- JS injects images -->
+                </div>
+            </div>
+
+            <!-- PANEL: TEXT -->
+            <div id="panel-text" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">テキスト管理</div>
+                    <div class="header-controls">
+                        <button class="btn btn-ai" id="btn-text-gen-modal">✨ カテゴリからAI生成</button>
+                        <button class="btn btn-outline">＋ 新規テンプレート</button>
+                    </div>
+                </div>
+                <div class="text-list" id="text-list">
+                    <!-- JS injects texts -->
+                </div>
+            </div>
+
+            <!-- PANEL: HISTORY (COMPETITOR ANALYSIS) -->
+            <div id="panel-history" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">投稿履歴・競合分析</div>
+                    <div class="header-controls">
+                        <span style="font-size:12px; color:#666;">自社アカウントと競合の動向を比較分析します</span>
+                        <div style="flex:1;"></div>
+                        <button class="btn btn-outline" onclick="alert('PDF出力機能は開発中です')">📄 レポート出力</button>
+                    </div>
+                </div>
+
+                <div class="comparison-container" style="overflow-y: auto; padding-bottom: 50px;">
+                    <div class="comp-table">
+                        <!-- LABELS COLUMN -->
+                        <div class="comp-labels">
+                            <div class="comp-label-cell">名前 (ID)</div>
+                            <div class="comp-label-cell">投稿頻度</div>
+                            <div class="comp-label-cell">フォロワー数</div>
+                            <div class="comp-label-cell">フォロー数</div>
+                            <div class="comp-label-cell large">説明文</div>
+                            <div class="comp-label-cell">URL</div>
+                            <div class="comp-label-cell">直近3投稿の<br>いいね数合計</div>
+                            <div class="comp-label-cell huge">最新の3投稿</div>
+                        </div>
+
+                        <!-- DATA COLUMNS (Injected by JS) -->
+                        <div class="comp-columns" id="comp-columns-container">
+                            <!-- JS will inject .comp-col divs here -->
+                        </div>
+
+                        <!-- ADD BUTTON -->
+                        <div class="add-comp-col">
+                            <button class="btn-add-comp" onclick="alert('競合アカウント追加')" title="競合を追加">＋</button>
+                        </div>
+                    </div>
+
+                    <!-- DEMI / Elevation Analysis Area -->
+                    <div id="elevation-analysis-section"
+                        style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px;">
+                        <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;">📉 標高分析 (DEMIデータ)</h3>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 20px;">過去の投稿パフォーマンスと推奨投稿タイミングの分析結果です。</p>
+
+                        <!-- Dummy Chart Area -->
+                        <div
+                            style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; height: 300px; display: flex; align-items: flex-end; justify-content: space-around;">
+                            <!-- Simple CSS Bar Chart Mockup -->
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 150px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">月</div>
+                            </div>
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 220px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">火</div>
+                            </div>
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 180px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">水</div>
+                            </div>
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 120px; width: 40px; background: #eee; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">木</div>
+                            </div>
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 250px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">金</div>
+                            </div>
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 280px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">土</div>
+                            </div>
+                            <div class="bar-group" style="text-align:center;">
+                                <div
+                                    style="height: 200px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                                </div>
+                                <div style="font-size:10px; margin-top:5px;">日</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:20px; display:flex; gap:20px;">
+                            <div
+                                style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
+                                <h4 style="font-size:13px; margin-bottom:10px;">📈 エンゲージメント推移</h4>
+                                <div
+                                    style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
+                                    (ラインチャートイメージ)
+                                </div>
+                            </div>
+                            <div
+                                style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
+                                <h4 style="font-size:13px; margin-bottom:10px;">👥 フォロワー属性</h4>
+                                <div
+                                    style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
+                                    (円グラフイメージ)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- MODAL: TEXT GENERATION -->
+    <div id="modal-text-gen" class="modal-overlay">
+        <div class="modal" style="height: auto; width: 600px; max-height: 80vh; overflow-y: auto;">
+            <h3 style="margin-bottom:15px; color:#6C35DE;">✨ AIテキスト生成 (3案提案)</h3>
+            <p style="font-size:12px; color:#666; margin-bottom:20px;">カテゴリーとタグを選択して、3つのパターンを提案します。</p>
+
+            <label style="font-weight:bold; font-size:12px;">カテゴリー</label>
+            <select id="gen-text-cat"
+                style="padding:8px; width:100%; margin-bottom:15px; border:1px solid #ccc; border-radius:4px;">
+                <option>日常・風景</option>
+                <option>施術・ビフォーアフター</option>
+                <option>キャンペーン・お知らせ</option>
+                <option>スタッフ紹介</option>
+                <option>Q&A・解説</option>
+            </select>
+
+            <label style="font-weight:bold; font-size:12px;">タグ (任意)</label>
+            <div style="display:flex; gap:5px; margin-bottom:20px; flex-wrap:wrap;">
+                <span class="tag-chip" onclick="this.classList.toggle('selected')">#癒し</span>
+                <span class="tag-chip" onclick="this.classList.toggle('selected')">#元気</span>
+                <span class="tag-chip" onclick="this.classList.toggle('selected')">#専門的</span>
+                <span class="tag-chip" onclick="this.classList.toggle('selected')">#親しみ</span>
+            </div>
+
+            <!-- Result Area -->
+            <div id="ai-gen-results-area" style="display:none; margin-bottom:20px;">
+                <h4 style="font-size:14px; margin-bottom:10px;">生成された案 (選択してください)</h4>
+                <div id="ai-gen-options" style="display:flex; flex-direction:column; gap:10px;">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <div style="text-align:right;">
+                <button class="btn btn-outline" id="btn-close-text-gen">キャンセル</button>
+                <button class="btn btn-ai" id="btn-run-text-gen">生成する</button>
+                <button class="btn btn-black" id="btn-save-generated-text" style="display:none;">選択した案を保存</button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+    <!-- MODAL: IMAGE TAGGING -->
+    <div id="modal-img-tag" class="modal-overlay">
+        <div class="modal" style="height: auto; width: 400px;">
+            <h3 style="margin-bottom:20px;">画像タグ編集</h3>
+            <div style="display:flex; justify-content:center; margin-bottom:15px;">
+                <img id="tag-target-img" src="" style="width:150px; height:150px; object-fit:cover; border-radius:8px;">
+            </div>
+
+            <label style="font-weight:bold; font-size:12px; margin-bottom:5px;">現在設定されているタグ</label>
+            <div id="current-tags-area"
+                style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:15px; min-height:30px; padding:5px; border:1px solid #eee; border-radius:4px;">
+                <!-- Tags injected here -->
+            </div>
+
+            <label style="font-weight:bold; font-size:12px; margin-bottom:5px;">新規タグを追加</label>
+            <div style="display:flex; gap:5px; margin-bottom:20px;">
+                <input type="text" id="new-tag-input" placeholder="タグを入力..."
+                    style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <button class="btn btn-black" id="btn-add-tag">追加</button>
+            </div>
+
+            <div style="text-align:right;">
+                <button class="btn btn-outline" id="btn-close-tag-modal">完了</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD PLAN -->
+    <div id="modal-plan" class="modal-overlay">
+        <div class="modal" style="height: auto; width: 400px;">
+            <h3 style="margin-bottom:20px;">新規投稿予定の登録</h3>
+
+            <label style="font-weight:bold; font-size:12px; margin-bottom:5px;">日付</label>
+            <input type="date" id="plan-date"
+                style="padding:8px; width:100%; margin-bottom:15px; border:1px solid #ccc; border-radius:4px;">
+
+            <label style="font-weight:bold; font-size:12px; margin-bottom:5px;">カテゴリー</label>
+            <select id="plan-category"
+                style="padding:8px; width:100%; margin-bottom:20px; border:1px solid #ccc; border-radius:4px;">
+                <option>日常・風景</option>
+                <option>施術・ビフォーアフター</option>
+                <option>キャンペーン・お知らせ</option>
+                <option>スタッフ紹介</option>
+                <option>Q&A・解説</option>
+            </select>
+
+            <div style="text-align:right; margin-top:10px;">
+                <button class="btn btn-outline" id="btn-close-plan">キャンセル</button>
+                <button class="btn btn-black" id="btn-save-plan">保存する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: EDITOR -->
+    <div id="modal-editor" class="modal-overlay">
+        <div class="modal" style="width: 1000px; height: 850px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="color:#333;">投稿コンテンツ編集</h3>
+                <div style="font-size:12px; color:#666;">
+                    ステータス: <span class="status-badge" id="editor-status-display" style="background:#ccc;">-</span>
+                </div>
+            </div>
+
+            <div class="editor-layout">
+                <div class="editor-left">
+                    <!-- Tool Area: Category & Recommend -->
+                    <div class="editor-tools">
+                        <div class="tool-label">投稿設定・レコメンド</div>
+                        <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+                            <span style="font-size:12px;">カテゴリー:</span>
+                            <select id="editor-category-select"
+                                style="padding:6px; border:1px solid #ddd; border-radius:4px; font-size:12px; width:200px;">
+                                <option value="日常・風景">日常・風景</option>
+                                <option value="施術・ビフォーアフター">施術・ビフォーアフター</option>
+                                <option value="キャンペーン・お知らせ">キャンペーン・お知らせ</option>
+                                <option value="スタッフ紹介">スタッフ紹介</option>
+                                <option value="Q&A・解説">Q&A・解説</option>
+                            </select>
+                            <span style="font-size:10px; color:#0277BD;">✨ カテゴリ変更でレコメンドが更新されます</span>
+                        </div>
+                    </div>
+
+                    <!-- Image Selection -->
+                    <div class="editor-section-title">
+                        <span>1. 画像を選択 (素材管理より)</span>
+                        <button class="btn btn-outline" style="padding:2px 8px; font-size:10px;"
+                            onclick="alert('画像生成AIを起動します')">🖼️ 画像を自動生成</button>
+                    </div>
+                    <div class="editor-img-list" id="editor-img-list">
+                        <!-- JS injected -->
+                    </div>
+
+                    <!-- Text Selection & Generation -->
+                    <div class="editor-section-title" style="margin-top:15px; margin-bottom: 10px;">
+                        <span>2. テキスト編集</span>
+                    </div>
+
+                    <!-- Text Tabs -->
+                    <div class="text-editor-tabs"
+                        style="display:flex; gap:10px; margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:5px;">
+                        <div class="text-tab active" id="tab-txt-material" onclick="switchTextTab('material')">素材から選ぶ
+                        </div>
+                        <div class="text-tab" id="tab-txt-ai" onclick="switchTextTab('ai')">AIで新たに作成</div>
+                    </div>
+
+                    <!-- TAB CONTENT: Material -->
+                    <div id="content-txt-material">
+                        <div class="editor-txt-list" id="editor-txt-list">
+                            <!-- JS injected -->
+                        </div>
+                    </div>
+
+                    <!-- TAB CONTENT: AI -->
+                    <div id="content-txt-ai" style="display:none;">
+                        <div class="ai-gen-box">
+                            <div class="tool-label">AI文章生成アシスタント</div>
+                            <input type="text" id="ai-text-prompt" class="ai-input"
+                                placeholder="例: 「春のキャンペーンについて、明るいトーンで」">
+                            <button class="btn btn-ai" style="width:100%; font-size:12px; padding:6px;"
+                                id="btn-gen-text">✨
+                                AIで文章を作成</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="editor-right">
+                    <div class="editor-section-title">プレビュー & 加工</div>
+
+                    <div id="editor-preview-wrapper"
+                        style="background:white; height:100%; border-radius:8px; padding:10px; overflow-y:auto; display:flex; flex-direction:column;">
+                        <!-- Square Image Preview with Overlay -->
+                        <div class="preview-container" id="editor-preview-container">
+                            <img src="" class="preview-img" id="editor-preview-img">
+                            <div class="text-overlay-mock" id="editor-overlay-mock">
+                                <div class="overlay-title">見出しテキスト</div>
+                                <div class="overlay-sub">サブタイトル</div>
+                            </div>
+                            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#ccc; font-size:12px;"
+                                id="preview-placeholder">No Image</div>
+                        </div>
+
+                        <!-- Caption Preview -->
+                        <textarea id="editor-preview-text"
+                            style="width:100%; height:120px; padding:8px; border:1px solid #ddd; font-size:12px; resize:vertical; margin-bottom:10px;"
+                            placeholder="キャプション本文..."></textarea>
+
+                        <!-- Magic Tools -->
+                        <button class="btn"
+                            style="background:#E0F7FA; color:#006064; border:1px solid #006064; margin-bottom:5px;"
+                            id="btn-apply-overlay">🎨 写真内文字入れ (自動)</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:right; margin-top:20px; padding-top:10px; border-top:1px solid #eee;">
+                <button class="btn btn-outline" id="btn-close-editor">キャンセル</button>
+                <button class="btn btn-black" id="btn-save-editor">これで保存 (ステータス: 投稿待ちへ)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
