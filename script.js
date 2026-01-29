@@ -227,7 +227,15 @@ function renderClients() {
         listBody.appendChild(row);
     });
 
+    // Update Summary Counts
+    const handledCount = CLIENTS.length - attentionCount;
+
     if (totalEl) totalEl.textContent = `全案件: ${CLIENTS.length}件`;
+
+    // Update New Handled Element
+    const handledEl = document.getElementById('summary-handled');
+    if (handledEl) handledEl.textContent = `✅ 今月対応済: ${handledCount}件`;
+
     if (attnEl) attnEl.innerHTML = `⚠️ 未対応: ${attentionCount}件`;
 }
 
