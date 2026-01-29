@@ -240,6 +240,32 @@ function renderSchedule() {
     const filtered = SCHEDULES.filter(s => s.date.startsWith(APP_STATE.currentMonthFilter));
     filtered.sort((a, b) => a.date.localeCompare(b.date));
 
+    // Calculate Summary Stats
+    const total = filtered.length;
+    const completed = filtered.filter(s => s.status === '投稿完了').length;
+    const waiting = filtered.filter(s => s.status === '投稿待ち').length; // or '承認待ち' etc? User asked for "承認待ち"?
+    // User request: "投稿完了10中2件20％、承認待ち3件30％"
+    // Let's count specific statuses.
+    const approved = filtered.filter(s => s.status === '承認待ち').length;
+
+    // Update Title with Summary
+    // We need a place to put this. Let's append to panel-title or create a summary div.
+    const titleEl = document.querySelector('#panel-schedule .panel-title');
+    if (titleEl) {
+        // Calculate percentages
+        const completedPct = total > 0 ? Math.round((completed / total) * 100) : 0;
+        const approvedPct = total > 0 ? Math.round((approved / total) * 100) : 0;
+
+        titleEl.innerHTML = `
+            進行管理 
+            <span style="font-size:12px; font-weight:normal; margin-left:15px; color:#666;">
+                投稿完了: <span style="font-weight:bold; color:#43A047;">${completed}/${total}件 (${completedPct}%)</span>
+                <span style="margin:0 10px; color:#ccc;">|</span>
+                承認待ち: <span style="font-weight:bold; color:#0D47A1;">${approved}/${total}件 (${approvedPct}%)</span>
+            </span>
+        `;
+    }
+
     filtered.forEach(item => {
         const row = document.createElement('div');
         row.className = 'table-row';
@@ -249,6 +275,7 @@ function renderSchedule() {
         let stColor = '#eee', stText = '#333';
         if (item.status === '投稿完了') { stColor = '#43A047'; stText = 'white'; }
         if (item.status === '投稿待ち') { stColor = '#039BE5'; stText = 'white'; }
+        if (item.status === '承認待ち') { stColor = '#1976D2'; stText = 'white'; } // Added based on context
         if (item.status === '構成中') { stColor = '#FFECB3'; stText = '#555'; } // Planning
 
         // Thumbnail
