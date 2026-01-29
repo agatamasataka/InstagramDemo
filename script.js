@@ -536,6 +536,24 @@ function renderMaterials() {
     const grid = document.getElementById('material-grid');
     grid.innerHTML = '';
 
+    // Calculate Stats
+    const total = LOCAL_IMAGES.length;
+    let taggedCount = 0;
+    LOCAL_IMAGES.forEach(src => {
+        if (IMAGE_TAGS[src] && IMAGE_TAGS[src].length > 0) taggedCount++;
+    });
+    const untaggedCount = total - taggedCount;
+
+    // Update Summary UI
+    const elTotal = document.getElementById('mat-summary-total');
+    const elTagged = document.getElementById('mat-summary-tagged');
+    const elUntagged = document.getElementById('mat-summary-untagged');
+
+    if (elTotal) elTotal.textContent = `全素材: ${total}枚`;
+    if (elTagged) elTagged.textContent = `🏷️ タグ付与済: ${taggedCount}枚`;
+    if (elUntagged) elUntagged.textContent = `⚠️ 未付与: ${untaggedCount}枚`;
+
+
     LOCAL_IMAGES.forEach((src, idx) => {
         const div = document.createElement('div');
         div.className = 'material-card';
@@ -569,6 +587,14 @@ function renderMaterials() {
 function renderTexts() {
     const list = document.getElementById('text-list');
     list.innerHTML = '';
+
+    // Calculate Summary
+    const total = TEXT_TEMPLATES.length;
+    // Find most common category/keyword? Just simple stats for now.
+    const lastUsedStr = TEXT_TEMPLATES.length > 0 ? TEXT_TEMPLATES[0].lastUsed : '-'; // just dummy
+
+    const elTotal = document.getElementById('txt-summary-total');
+    if (elTotal) elTotal.textContent = `登録テンプレート: ${total}件`;
 
     TEXT_TEMPLATES.forEach(t => {
         const item = document.createElement('div');
