@@ -17,13 +17,39 @@ const LOCAL_IMAGES = [
     "assets/伊藤超短波　講師経験.jpg"
 ];
 
-const TEXT_TEMPLATES = [
-    { title: "朝の挨拶", content: "おはようございます！\n今日の[地域名]は快晴ですね☀️\n\n当院は朝9時から元気に診療しております！\n急なぎっくり腰や寝違えなど、お困りの際はすぐにご連絡ください📞", usageCount: 12, lastUsed: "2026-01-20" },
-    { title: "ビフォーアフター", content: "【施術ビフォーアフター】\n猫背矯正を受けていただいた患者様です✨\n\n左：施術前\n右：施術後\n\nたった1回でもこれだけ姿勢が変わります！\n姿勢が整うと、肩こりや頭痛の改善にも繋がりますよ😊", usageCount: 8, lastUsed: "2026-01-25" },
-    { title: "キャンペーン", content: "📢 今月のキャンペーンお知らせ\n\n今なら「骨盤矯正」が初回限定で...\n通常 5,500円 ➡️ 2,980円！！\n\nこの機会にぜひお試しください✨\nご予約はプロフィールのリンクから！", usageCount: 5, lastUsed: "2026-01-15" },
-    { title: "予約空き状況", content: "📅 本日の予約空き状況\n\n11:00 〜 ◯\n14:30 〜 △\n16:00 〜 ◯\n\n夕方以降は混み合いますので、早めのご予約をおすすめします！", usageCount: 30, lastUsed: "2026-01-28" },
-    { title: "Q&A", content: "Q. 予約は必要ですか？\nA. 当院は予約優先制となっております。\n飛び込みも可能ですが、待ち時間を少なくするため事前連絡をお勧めしております📱", usageCount: 3, lastUsed: "2025-12-10" }
+const TEXT_CATEGORIES = [
+    "日常・風景", "施術・ビフォーアフター", "キャンペーン・お知らせ", "スタッフ紹介", "Q&A・解説"
 ];
+
+// Generate 50 Dummy Texts (10 per category)
+const TEXT_TEMPLATES = [];
+TEXT_CATEGORIES.forEach(cat => {
+    // 5 "Body" (Full post)
+    for (let i = 1; i <= 5; i++) {
+        TEXT_TEMPLATES.push({
+            id: `txt_${cat}_b_${i}`,
+            category: cat,
+            type: "本文",
+            title: `${cat}投稿案 ${i}`,
+            content: `【${cat}】\nこれは${cat}に関する投稿の本文案${i}です。\n季節の挨拶や、お客様へのメッセージを含めます。\n\n#${cat} #ロカオプ`,
+            usageCount: Math.floor(Math.random() * 20),
+            lastUsed: "2026-01-10"
+        });
+    }
+    // 5 "Parts" (Opening/Closing/Hashtags)
+    const partTypes = ["冒頭挨拶", "締めの挨拶", "ハッシュタグ集", "キャッチコピー", "誘導文"];
+    partTypes.forEach((pt, i) => {
+        TEXT_TEMPLATES.push({
+            id: `txt_${cat}_p_${i}`,
+            category: cat,
+            type: "パーツ",
+            title: `${cat}用${pt}`,
+            content: `(パーツ: ${pt})\n${cat}に使える便利な${pt}のテキストです。`,
+            usageCount: Math.floor(Math.random() * 50),
+            lastUsed: "2026-01-28"
+        });
+    });
+});
 
 // --- Competitor Analysis Data ---
 const COMPETITOR_DATA = [
@@ -90,7 +116,8 @@ let SCHEDULES = [
 let APP_STATE = {
     currentTab: 'clients',
     currentMonthFilter: '2026-02', // YYYY-MM
-    selectedScheduleId: null
+    selectedScheduleId: null,
+    activeTextCategory: 'all' // 'all' or specific category name
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -585,33 +612,84 @@ function renderMaterials() {
 }
 
 function renderTexts() {
-    const list = document.getElementById('text-list');
-    list.innerHTML = '';
+    const container = document.getElementById('text-manager-container');
+    if (!container) return; // Should allow caller to ensure container exists, or injection will fail if HTML not updated yet.
 
-    // Calculate Summary
+    // We need to inject the 2-column layout first if not present
+    // But better to expect HTML update. Assuming HTML update in next tool call.
+    // Let's implement the logic assuming the new HTML structure:
+    // Structure:
+    // <div id="txt-sidebar"></div> <div id="txt-main-list"></div>
+
+    // Summary Update
     const total = TEXT_TEMPLATES.length;
-    // Find most common category/keyword? Just simple stats for now.
-    const lastUsedStr = TEXT_TEMPLATES.length > 0 ? TEXT_TEMPLATES[0].lastUsed : '-'; // just dummy
+    const catCount = TEXT_CATEGORIES.length;
 
-    const elTotal = document.getElementById('txt-summary-total');
-    if (elTotal) elTotal.textContent = `登録テンプレート: ${total}件`;
-
-    TEXT_TEMPLATES.forEach(t => {
-        const item = document.createElement('div');
-        item.className = 'text-card';
-        item.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                <h4>${t.title}</h4>
-                <div style="font-size:10px; color:#888; text-align:right;">
-                    <div>使用回数: ${t.usageCount || 0}回</div>
-                    <div>最終: ${t.lastUsed || '-'}</div>
-                </div>
-            </div>
-            <p>${t.content.replace(/\n/g, '<br>')}</p>
+    const elSummary = document.getElementById('txt-summary-bar');
+    if (elSummary) {
+        elSummary.innerHTML = `
+            <span style="font-weight:bold;">登録テンプレート: ${total}件</span>
+            <span style="margin:0 10px; color:#ccc;">|</span>
+            <span>カテゴリー: ${catCount}種</span>
+            <span style="margin:0 10px; color:#ccc;">|</span>
+            <span style="font-size:11px; color:#666;">(内訳: 各カテゴリ約10件)</span>
         `;
-        list.appendChild(item);
-    });
+    }
+
+    // Render Sidebar (Folders)
+    const sidebar = document.getElementById('txt-sidebar');
+    if (sidebar) {
+        sidebar.innerHTML = '';
+        // "All" folder
+        const allDiv = document.createElement('div');
+        allDiv.className = `txt-folder ${APP_STATE.activeTextCategory === 'all' ? 'active' : ''}`;
+        allDiv.innerHTML = `📁 すべて (${total})`;
+        allDiv.onclick = () => { APP_STATE.activeTextCategory = 'all'; renderTexts(); };
+        sidebar.appendChild(allDiv);
+
+        TEXT_CATEGORIES.forEach(cat => {
+            const count = TEXT_TEMPLATES.filter(t => t.category === cat).length;
+            const div = document.createElement('div');
+            div.className = `txt-folder ${APP_STATE.activeTextCategory === cat ? 'active' : ''}`;
+            div.innerHTML = `📁 ${cat} (${count})`;
+            div.onclick = () => { APP_STATE.activeTextCategory = cat; renderTexts(); };
+            sidebar.appendChild(div);
+        });
+    }
+
+    // Render Main List
+    const list = document.getElementById('txt-main-list');
+    if (list) {
+        list.innerHTML = '';
+
+        let targetData = TEXT_TEMPLATES;
+        if (APP_STATE.activeTextCategory !== 'all') {
+            targetData = TEXT_TEMPLATES.filter(t => t.category === APP_STATE.activeTextCategory);
+        }
+
+        targetData.forEach(t => {
+            const item = document.createElement('div');
+            item.className = 'text-card'; // Reuse existing class
+            // Add Type Badge
+            const typeColor = t.type === '本文' ? '#E3F2FD' : '#FFF3E0';
+            const typeText = t.type === '本文' ? '#1565C0' : '#EF6C00';
+
+            item.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px;">
+                    <div style="font-weight:bold; font-size:13px;">${t.title}</div>
+                    <span style="background:${typeColor}; color:${typeText}; font-size:10px; padding:2px 6px; border-radius:4px;">${t.type}</span>
+                </div>
+                <div style="font-size:10px; color:#666; margin-bottom:8px;">📁 ${t.category}</div>
+                <p style="font-size:12px; color:#444; white-space:pre-wrap; max-height:60px; overflow:hidden;">${t.content}</p>
+                <div style="margin-top:8px; border-top:1px solid #eee; padding-top:4px; font-size:10px; color:#888; text-align:right;">
+                    使用: ${t.usageCount}回
+                </div>
+            `;
+            list.appendChild(item);
+        });
+    }
 }
+
 
 function renderCompetitors() {
     const container = document.getElementById('comp-columns-container');
