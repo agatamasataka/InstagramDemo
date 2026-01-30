@@ -51,45 +51,93 @@ TEXT_CATEGORIES.forEach(cat => {
     });
 });
 
-// --- Competitor Analysis Data ---
-const COMPETITOR_DATA = [
+// --- Platform History Data ---
+const PLATFORM_DATA = [
     {
-        id: "locaop",
-        name: "ロカオプMEO対策でお客様を呼ぼう！",
-        account_id: "@locaop_official",
-        icon: "assets/app_icon_square.png", // specific icon or placeholder
-        posts_per_month: 1,
-        followers: 374,
-        following: 24,
-        description: "ローカルビジネスをオープンに！\n■店舗型ビジネスの集客サービス\n■WEBからの集客を最大化\n■店舗経営はまずロカオプから\nWeb集客ならロカオプ🌱\nGoogleマップ・クチコミ対策から予約システム、サイト制作、SNS集客までロカオプ一つで完了！\n販売代理店も大募集中です。\nお気軽にDMまで🎈",
-        url: "https://locaop.jp/media/",
-        recent_likes_total: 9,
-        my_account: true,
-        recent_posts: [
-            { img: "assets/579225706639130956.jpg", likes: 3, caption: "【無料オンラインセミナー開催】\n宿泊&観光レジャー施設の「選ばれる」集客戦略..." },
-            { img: "assets/579225708769837278.jpg", likes: 4, caption: "MEO対策のメリットとは？\nGoogleマップでの露出を増やして..." },
-            { img: "assets/579225710431306106.jpg", likes: 2, caption: "ロカオプ導入事例のご紹介✨\n売上が前年比120%アップしました！" }
+        id: 'instagram',
+        name: 'Instagram',
+        color: '#E1306C',
+        accountName: 'locaop_demo',
+        stats: 'フォロワー: 374人',
+        posts: [
+            { date: '1/28', img: 'assets/579225706639130956.jpg', text: '【無料オンラインセミナー開催】宿泊&観光レジャー施設の...', likes: 12, metric: 'いいね' },
+            { date: '1/25', img: 'assets/579225708769837278.jpg', text: 'MEO対策のメリットとは？Googleマップでの露出を増やして...', likes: 8, metric: 'いいね' },
+            { date: '1/20', img: 'assets/579225710431306106.jpg', text: 'ロカオプ導入事例のご紹介✨売上が前年比120%アップ...', likes: 15, metric: 'いいね' }
         ]
     },
     {
-        id: "lasbocas",
-        name: "銀座バル Las Bocas (ラスボカス)",
-        account_id: "@las_bocas",
-        icon: "assets/placeholder_competitor.png", // placeholder
-        posts_per_month: 25,
-        followers: 2287,
-        following: 6388,
-        description: "スペイン料理🇪🇸 瀬戸内直送シーフード&ワイン\n〜ラスボカス〜\n【ランチ】\n月・火・水・金・土：11:30~15:00\n木：11:30〜14:00\n【ディナー】\n月〜木・土　18:00〜23:00（L.O.22:00）\n金　18:00〜23:30（L.O.22:30）\n0334860409",
-        url: "https://las-bocas.com/insta/link",
-        recent_likes_total: 166,
-        my_account: false,
-        recent_posts: [
-            { img: "assets/579226579608535078.jpg", likes: 45, caption: "¡Hola, febrero!\n皆様、こんにちは。少しずつ日が長くなり、春の訪れを待ちわびる2月..." },
-            { img: "assets/579226580665761812.jpg", likes: 52, caption: "本日のオススメ！\n瀬戸内直送の新鮮な真鯛が入荷しました🐟..." },
-            { img: "assets/579226581352841863.jpg", likes: 69, caption: "週末はワインで乾杯🍷\n新しいスペインワインが入りました..." }
+        id: 'google',
+        name: 'Google Maps',
+        color: '#4285F4',
+        accountName: '株式会社ロカオプ',
+        stats: '評価: 4.8 (120件)',
+        posts: [
+            { date: '1/27', img: 'assets/579226577310057067.jpg', text: '最新のセミナー情報をお届けします。詳細はこちらから。', likes: 450, metric: '閲覧数' },
+            { date: '1/22', img: 'assets/579226579037586127.jpg', text: '春のキャンペーン実施中！今なら初期費用がお得に。', likes: 320, metric: '閲覧数' },
+            { date: '1/15', img: 'assets/579226579222921320.jpg', text: '【新機能追加】予約システムがさらに使いやすくなりました。', likes: 280, metric: '閲覧数' }
+        ]
+    },
+    {
+        id: 'x',
+        name: 'X (Twitter)',
+        color: '#000000',
+        accountName: '@locaopDEMO',
+        stats: 'フォロワー: 1,200人',
+        posts: [
+            { date: '1/29', img: null, text: 'ロカオプのデモアカウントです。本日は開発チームのmtgでした！ #ロカオプ', likes: 200, metric: 'Imp' },
+            { date: '1/28', img: null, text: 'MEO対策、意外と知られていないポイントを解説しました👇', likes: 150, metric: 'Imp' },
+            { date: '1/26', img: null, text: 'おはようございます！今日も一日頑張りましょう☀️', likes: 180, metric: 'Imp' }
         ]
     }
 ];
+
+// ... (skipping Client Data which remains same) ... 
+
+// (Inside initTabs or DOMContentLoaded, make sure to call renderHistory instead of renderCompetitors)
+
+// --- History Logic ---
+function renderHistory() {
+    const container = document.getElementById('history-grid');
+    if (!container) return;
+    container.innerHTML = '';
+
+    PLATFORM_DATA.forEach(p => {
+        const bg = p.id === 'instagram' ? 'linear-gradient(45deg, #f09433, #bc1888)' : p.color;
+
+        const col = document.createElement('div');
+        col.className = 'history-col';
+        col.style.cssText = "background:white; border-radius:8px; border:1px solid #eee; overflow:hidden; display:flex; flex-direction:column;";
+
+        let postsHtml = '';
+        p.posts.forEach(post => {
+            const thumb = post.img ? `<img src="${post.img}" style="width:40px; height:40px; object-fit:cover; border-radius:4px; margin-right:8px;">` : '';
+            postsHtml += `
+                <div style="padding:10px; border-bottom:1px solid #f0f0f0; display:flex; align-items:start;">
+                    ${thumb}
+                    <div style="flex:1;">
+                        <div style="font-size:10px; color:#888; margin-bottom:2px;">${post.date}</div>
+                        <div style="font-size:11px; color:#333; line-height:1.4; margin-bottom:4px; max-height:45px; overflow:hidden;">${post.text}</div>
+                        <div style="font-size:10px; font-weight:bold; color:${p.color === '#000000' && p.id !== 'x' ? '#666' : p.color};">
+                            ${post.metric}: ${post.likes}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        col.innerHTML = `
+            <div style="background:${bg}; padding:15px; color:white;">
+                <div style="font-weight:bold; font-size:16px;">${p.name}</div>
+                <div style="font-size:12px; opacity:0.9;">${p.accountName}</div>
+                <div style="font-size:11px; margin-top:5px; background:rgba(255,255,255,0.2); display:inline-block; padding:2px 8px; border-radius:10px;">${p.stats}</div>
+            </div>
+            <div style="flex:1; overflow-y:auto;">
+                ${postsHtml}
+            </div>
+        `;
+        container.appendChild(col);
+    });
+}
 
 
 // --- Client Management Data ---
@@ -127,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSchedule();
     renderMaterials();
     renderTexts();
-    renderCompetitors(); // New
+    renderHistory(); // Renamed from renderCompetitors
     setupModals();
 });
 
@@ -149,6 +197,12 @@ function initTabs() {
             });
             const targetEl = document.getElementById(`panel-${target}`);
             if (targetEl) targetEl.style.display = 'flex'; // Comp table needs flex
+
+            // Re-render when switching (for safety)
+            if (target === 'schedule') renderSchedule();
+            if (target === 'material') renderMaterials();
+            if (target === 'text') renderTexts();
+            if (target === 'history') renderHistory();
 
             APP_STATE.currentTab = target;
         });
