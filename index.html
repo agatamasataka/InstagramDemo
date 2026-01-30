@@ -148,6 +148,91 @@
                         <!-- JS injects rows -->
                     </div>
                 </div>
+
+                <!-- COCKPIT CHARTS (Engagement / Followers) -->
+                <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                    <!-- Engagement Chart -->
+                    <div style="background:white; padding:20px; border-radius:8px; border:1px solid #eee;">
+                        <h4 style="font-size:14px; margin-bottom:15px; color:#333; display:flex; align-items:center;">
+                            📈 エンゲージメント推移 (直近30日)
+                        </h4>
+                        <!-- CSS Mock Line Chart -->
+                        <div
+                            style="position:relative; height:150px; border-left:1px solid #ddd; border-bottom:1px solid #ddd; display:flex; align-items:flex-end; padding-left:10px; gap:15px;">
+                            <!-- Points -->
+                            <div style="width:10px; height:30%; background:#4285F4; border-radius:50%;"></div>
+                            <div style="width:10px; height:50%; background:#4285F4; border-radius:50%;"></div>
+                            <div style="width:10px; height:45%; background:#4285F4; border-radius:50%;"></div>
+                            <div style="width:10px; height:80%; background:#4285F4; border-radius:50%;"></div>
+                            <div style="width:10px; height:60%; background:#4285F4; border-radius:50%;"></div>
+                            <div
+                                style="width:10px; height:90%; background:#E91E63; border-radius:50%; box-shadow:0 0 5px #E91E63;">
+                            </div>
+
+                            <!-- Connecting Line (Fake visual) -->
+                            <svg
+                                style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+                                <path d="M15 105 L 40 75 L 65 82 L 90 30 L 115 60 L 140 15" stroke="#4285F4"
+                                    stroke-width="2" fill="none" opacity="0.5" />
+                            </svg>
+                        </div>
+                        <div
+                            style="display:flex; justify-content:space-between; font-size:10px; color:#666; margin-top:5px; padding-left:10px;">
+                            <span>1/1</span>
+                            <span>1/15</span>
+                            <span>1/30</span>
+                        </div>
+                    </div>
+
+                    <!-- Follower Demographics -->
+                    <div style="background:white; padding:20px; border-radius:8px; border:1px solid #eee;">
+                        <h4 style="font-size:14px; margin-bottom:15px; color:#333; display:flex; align-items:center;">
+                            👥 フォロワー属性 (性別・年代)
+                        </h4>
+                        <div style="display:flex; align-items:center; gap:20px;">
+                            <!-- Pie Chart Mock -->
+                            <div
+                                style="position:relative; width:100px; height:100px; border-radius:50%; background:conic-gradient(#E91E63 0% 65%, #2196F3 65% 100%);">
+                                <div
+                                    style="position:absolute; inset:20px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                                    <div style="font-size:10px; color:#666;">女性</div>
+                                    <div style="font-size:14px; font-weight:bold; color:#E91E63;">65%</div>
+                                </div>
+                            </div>
+
+                            <!-- Legend / Details -->
+                            <div style="flex:1;">
+                                <div style="margin-bottom:10px;">
+                                    <div
+                                        style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:2px;">
+                                        <span>20代</span> <span>40%</span>
+                                    </div>
+                                    <div style="height:6px; background:#f0f0f0; border-radius:3px;">
+                                        <div style="width:40%; height:100%; background:#333; border-radius:3px;"></div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <div
+                                        style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:2px;">
+                                        <span>30代</span> <span>35%</span>
+                                    </div>
+                                    <div style="height:6px; background:#f0f0f0; border-radius:3px;">
+                                        <div style="width:35%; height:100%; background:#555; border-radius:3px;"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:2px;">
+                                        <span>40代~</span> <span>25%</span>
+                                    </div>
+                                    <div style="height:6px; background:#f0f0f0; border-radius:3px;">
+                                        <div style="width:25%; height:100%; background:#888; border-radius:3px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- PANEL: MATERIAL -->
@@ -338,224 +423,179 @@
                             style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px;">
                             <div style="font-size:12px; color:#666; margin-bottom:15px; font-weight:bold;">📊 カテゴリー別
                                 投稿数分析</div>
-                            <!-- Mock Bars -->
-                            <div style="display:flex; flex-direction:column; gap:10px; font-size:11px; color:#555;">
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                                        <span>日常・風景</span> <span>42% (12件)</span>
-                                    </div>
-                                    <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
-                                        <div style="width:42%; height:100%; background:#4285F4;"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                                        <span>施術・ビフォーアフター</span> <span>28% (8件)</span>
-                                    </div>
-                                    <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
-                                        <div style="width:28%; height:100%; background:#34A853;"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                                        <span>キャンペーン・お知らせ</span> <span>15% (4件)</span>
-                                    </div>
-                                    <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
-                                        <div style="width:15%; height:100%; background:#FBBC05;"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                                        <span>スタッフ紹介</span> <span>10% (3件)</span>
-                                    </div>
-                                    <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
-                                        <div style="width:10%; height:100%; background:#EA4335;"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                                        <span>Q&A・解説</span> <span>5% (1件)</span>
-                                    </div>
-                                    <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
-                                        <div style="width:5%; height:100%; background:#9E9E9E;"></div>
-                                    </div>
-                                </div>
+                            <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
+                                <div style="width:28%; height:100%; background:#34A853;"></div>
                             </div>
-                        </div>
-
-                        <!-- Block B: Engagement Heatmap (Time x Day) -->
-                        <div class="analysis-card"
-                            style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px;">
-                            <div style="font-size:12px; color:#666; margin-bottom:15px; font-weight:bold;">🔥 時間帯別
-                                エンゲージメントヒートマップ</div>
-
-                            <div
-                                style="display:grid; grid-template-columns: 40px repeat(7, 1fr); gap:2px; font-size:9px; text-align:center; color:#888;">
-                                <!-- Header -->
-                                <div></div>
-                                <div>月</div>
-                                <div>火</div>
-                                <div>水</div>
-                                <div>木</div>
-                                <div>金</div>
-                                <div>土</div>
-                                <div>日</div>
-
-                                <!-- Rows -->
-                                <!-- 9-12 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">09-12</div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#1976D2;"></div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
-
-                                <!-- 12-15 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">12-15</div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#0D47A1;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#2196F3;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#BBDEFB;"></div>
-
-                                <!-- 15-18 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">15-18</div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#1976D2;"></div>
-                                <div style="background:#2196F3;"></div>
-
-                                <!-- 18-21 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">18-21</div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#2196F3;"></div>
-                                <div style="background:#0D47A1;"></div>
-                                <div style="background:#1565C0;"></div>
-                                <div style="background:#1976D2;"></div>
-                            </div>
-                            <div
-                                style="display:flex; justify-content:flex-end; gap:5px; margin-top:10px; font-size:9px; align-items:center;">
-                                <span>Low</span>
-                                <div style="width:10px; height:10px; background:#E3F2FD;"></div>
-                                <div style="width:10px; height:10px; background:#BBDEFB;"></div>
-                                <div style="width:10px; height:10px; background:#2196F3;"></div>
-                                <div style="width:10px; height:10px; background:#0D47A1;"></div>
-                                <span>High</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- AI Advice Section -->
-                    <div
-                        style="margin-top:20px; background:#fffbf0; border:1px solid #ffe0b2; padding:15px; border-radius:12px; display:flex; align-items:start; gap:15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                        <div style="flex-shrink:0;">
-                            <img src="assets/locapo.png" style="width:60px; height:auto; display:block;">
                         </div>
                         <div>
-                            <div
-                                style="font-size:14px; font-weight:bold; color:#d84315; margin-bottom:8px; display:flex; align-items:center;">
-                                ロカプーからの次の投稿アドバイス
-                                <span
-                                    style="font-size:10px; background:#fff; border:1px solid #ffccbc; color:#ff7043; padding:2px 6px; border-radius:10px; margin-left:8px;">AI
-                                    Analysis</span>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                                <span>キャンペーン・お知らせ</span> <span>15% (4件)</span>
                             </div>
-                            <div
-                                style="font-size:13px; color:#5d4037; line-height:1.6; background:rgba(255,255,255,0.6); padding:10px; border-radius:8px;">
-                                投稿データ分析の結果、<span
-                                    style="font-weight:bold; color:#E65100; background:#fff3e0;">水曜のお昼(12時)</span>と<span
-                                    style="font-weight:bold; color:#E65100; background:#fff3e0;">金曜の夜(20時)</span>のエンゲージメントが非常に高い傾向にあります！<br>
-                                また、「Q&A・解説」カテゴリーの投稿が不足しています。<br>
-                                次回は<span
-                                    style="font-weight:bold; text-decoration:underline; decoration-color:#ffcc80;">水曜
-                                    12:00に「Q&A」に関する投稿</span>を行うと、みんなが見てくれるかも！✨
+                            <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
+                                <div style="width:15%; height:100%; background:#FBBC05;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                                <span>スタッフ紹介</span> <span>10% (3件)</span>
+                            </div>
+                            <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
+                                <div style="width:10%; height:100%; background:#EA4335;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                                <span>Q&A・解説</span> <span>5% (1件)</span>
+                            </div>
+                            <div style="height:6px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
+                                <div style="width:5%; height:100%; background:#9E9E9E;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="bar-group" style="text-align:center;">
-                <div
-                    style="height: 200px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
+
+                <!-- Block B: Engagement Heatmap (Time x Day) -->
+                <div class="analysis-card"
+                    style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px;">
+                    <div style="font-size:12px; color:#666; margin-bottom:15px; font-weight:bold;">🔥 時間帯別
+                        エンゲージメントヒートマップ</div>
+
+                    <div
+                        style="display:grid; grid-template-columns: 40px repeat(7, 1fr); gap:2px; font-size:9px; text-align:center; color:#888;">
+                        <!-- Header -->
+                        <div></div>
+                        <div>月</div>
+                        <div>火</div>
+                        <div>水</div>
+                        <div>木</div>
+                        <div>金</div>
+                        <div>土</div>
+                        <div>日</div>
+
+                        <!-- Rows -->
+                        <!-- 9-12 -->
+                        <div style="display:flex; align-items:center; justify-content:center;">09-12</div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#BBDEFB;"></div>
+                        <div style="background:#1976D2;"></div>
+                        <div style="background:#BBDEFB;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#E3F2FD;"></div>
+
+                        <!-- 12-15 -->
+                        <div style="display:flex; align-items:center; justify-content:center;">12-15</div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#0D47A1;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#2196F3;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#BBDEFB;"></div>
+
+                        <!-- 15-18 -->
+                        <div style="display:flex; align-items:center; justify-content:center;">15-18</div>
+                        <div style="background:#BBDEFB;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#BBDEFB;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#1976D2;"></div>
+                        <div style="background:#2196F3;"></div>
+
+                        <!-- 18-21 -->
+                        <div style="display:flex; align-items:center; justify-content:center;">18-21</div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#BBDEFB;"></div>
+                        <div style="background:#E3F2FD;"></div>
+                        <div style="background:#2196F3;"></div>
+                        <div style="background:#0D47A1;"></div>
+                        <div style="background:#1565C0;"></div>
+                        <div style="background:#1976D2;"></div>
+                    </div>
+                    <div
+                        style="display:flex; justify-content:flex-end; gap:5px; margin-top:10px; font-size:9px; align-items:center;">
+                        <span>Low</span>
+                        <div style="width:10px; height:10px; background:#E3F2FD;"></div>
+                        <div style="width:10px; height:10px; background:#BBDEFB;"></div>
+                        <div style="width:10px; height:10px; background:#2196F3;"></div>
+                        <div style="width:10px; height:10px; background:#0D47A1;"></div>
+                        <span>High</span>
+                    </div>
                 </div>
-                <div style="font-size:10px; margin-top:5px;">日</div>
+
             </div>
+
+            <!-- AI Advice Section -->
+            <div
+                style="margin-top:20px; background:#fffbf0; border:1px solid #ffe0b2; padding:15px; border-radius:12px; display:flex; align-items:start; gap:15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="flex-shrink:0;">
+                    <img src="assets/locapo.png" style="width:60px; height:auto; display:block;">
+                </div>
+                <div>
+                    <div
+                        style="font-size:14px; font-weight:bold; color:#d84315; margin-bottom:8px; display:flex; align-items:center;">
+                        ロカプーからの次の投稿アドバイス
+                        <span
+                            style="font-size:10px; background:#fff; border:1px solid #ffccbc; color:#ff7043; padding:2px 6px; border-radius:10px; margin-left:8px;">AI
+                            Analysis</span>
+                    </div>
+                    <div
+                        style="font-size:13px; color:#5d4037; line-height:1.6; background:rgba(255,255,255,0.6); padding:10px; border-radius:8px;">
+                        投稿データ分析の結果、<span
+                            style="font-weight:bold; color:#E65100; background:#fff3e0;">水曜のお昼(12時)</span>と<span
+                            style="font-weight:bold; color:#E65100; background:#fff3e0;">金曜の夜(20時)</span>のエンゲージメントが非常に高い傾向にあります！<br>
+                        また、「Q&A・解説」カテゴリーの投稿が不足しています。<br>
+                        次回は<span style="font-weight:bold; text-decoration:underline; decoration-color:#ffcc80;">水曜
+                            12:00に「Q&A」に関する投稿</span>を行うと、みんなが見てくれるかも！✨
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- MODAL: TEXT GENERATION -->
+            <div id="modal-text-gen" class="modal-overlay">
+                <div class="modal" style="height: auto; width: 600px; max-height: 80vh; overflow-y: auto;">
+                    <h3 style="margin-bottom:15px; color:#6C35DE;">✨ AIテキスト生成 (3案提案)</h3>
+                    <p style="font-size:12px; color:#666; margin-bottom:20px;">カテゴリーとタグを選択して、3つのパターンを提案します。</p>
+
+                    <label style="font-weight:bold; font-size:12px;">カテゴリー</label>
+                    <select id="gen-text-cat"
+                        style="padding:8px; width:100%; margin-bottom:15px; border:1px solid #ccc; border-radius:4px;">
+                        <option>日常・風景</option>
+                        <option>施術・ビフォーアフター</option>
+                        <option>キャンペーン・お知らせ</option>
+                        <option>スタッフ紹介</option>
+                        <option>Q&A・解説</option>
+                    </select>
+
+                    <label style="font-weight:bold; font-size:12px;">タグ (任意)</label>
+                    <div style="display:flex; gap:5px; margin-bottom:20px; flex-wrap:wrap;">
+                        <span class="tag-chip" onclick="this.classList.toggle('selected')">#癒し</span>
+                        <span class="tag-chip" onclick="this.classList.toggle('selected')">#元気</span>
+                        <span class="tag-chip" onclick="this.classList.toggle('selected')">#専門的</span>
+                        <span class="tag-chip" onclick="this.classList.toggle('selected')">#親しみ</span>
+                    </div>
+
+                    <!-- Result Area -->
+                    <div id="ai-gen-results-area" style="display:none; margin-bottom:20px;">
+                        <h4 style="font-size:14px; margin-bottom:10px;">生成された案 (選択してください)</h4>
+                        <div id="ai-gen-options" style="display:flex; flex-direction:column; gap:10px;">
+                            <!-- JS Injected -->
+                        </div>
+                    </div>
+
+                    <div style="text-align:right;">
+                        <button class="btn btn-outline" id="btn-close-text-gen">キャンセル</button>
+                        <button class="btn btn-ai" id="btn-run-text-gen">生成する</button>
+                        <button class="btn btn-black" id="btn-save-generated-text"
+                            style="display:none;">選択した案を保存</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <div style="margin-top:20px; display:flex; gap:20px;">
-            <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
-                <h4 style="font-size:13px; margin-bottom:10px;">📈 エンゲージメント推移</h4>
-                <div
-                    style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
-                    (ラインチャートイメージ)
-                </div>
-            </div>
-            <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
-                <h4 style="font-size:13px; margin-bottom:10px;">👥 フォロワー属性</h4>
-                <div
-                    style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
-                    (円グラフイメージ)
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-
-    </div>
-    </div>
-
-
-    <!-- MODAL: TEXT GENERATION -->
-    <div id="modal-text-gen" class="modal-overlay">
-        <div class="modal" style="height: auto; width: 600px; max-height: 80vh; overflow-y: auto;">
-            <h3 style="margin-bottom:15px; color:#6C35DE;">✨ AIテキスト生成 (3案提案)</h3>
-            <p style="font-size:12px; color:#666; margin-bottom:20px;">カテゴリーとタグを選択して、3つのパターンを提案します。</p>
-
-            <label style="font-weight:bold; font-size:12px;">カテゴリー</label>
-            <select id="gen-text-cat"
-                style="padding:8px; width:100%; margin-bottom:15px; border:1px solid #ccc; border-radius:4px;">
-                <option>日常・風景</option>
-                <option>施術・ビフォーアフター</option>
-                <option>キャンペーン・お知らせ</option>
-                <option>スタッフ紹介</option>
-                <option>Q&A・解説</option>
-            </select>
-
-            <label style="font-weight:bold; font-size:12px;">タグ (任意)</label>
-            <div style="display:flex; gap:5px; margin-bottom:20px; flex-wrap:wrap;">
-                <span class="tag-chip" onclick="this.classList.toggle('selected')">#癒し</span>
-                <span class="tag-chip" onclick="this.classList.toggle('selected')">#元気</span>
-                <span class="tag-chip" onclick="this.classList.toggle('selected')">#専門的</span>
-                <span class="tag-chip" onclick="this.classList.toggle('selected')">#親しみ</span>
-            </div>
-
-            <!-- Result Area -->
-            <div id="ai-gen-results-area" style="display:none; margin-bottom:20px;">
-                <h4 style="font-size:14px; margin-bottom:10px;">生成された案 (選択してください)</h4>
-                <div id="ai-gen-options" style="display:flex; flex-direction:column; gap:10px;">
-                    <!-- JS Injected -->
-                </div>
-            </div>
-
-            <div style="text-align:right;">
-                <button class="btn btn-outline" id="btn-close-text-gen">キャンセル</button>
-                <button class="btn btn-ai" id="btn-run-text-gen">生成する</button>
-                <button class="btn btn-black" id="btn-save-generated-text" style="display:none;">選択した案を保存</button>
-            </div>
-        </div>
-    </div>
-
-    </div>
     </div>
 
     <!-- MODAL: IMAGE TAGGING -->
