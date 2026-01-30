@@ -75,6 +75,7 @@
             <button class="tab-btn" data-target="material">素材管理</button>
             <button class="tab-btn" data-target="text">テキスト管理</button>
             <button class="tab-btn" data-target="history">自社投稿履歴(各媒体)</button>
+            <button class="tab-btn" data-target="analysis">統計・分析</button>
         </div>
 
         <div class="tab-content">
@@ -147,10 +148,114 @@
                         <!-- JS injects rows -->
                     </div>
                 </div>
+            </div>
 
-                <!-- ANALYSIS DASHBOARD (DEMI Data & Pattern Analysis) -->
-                <div class="analysis-dashboard"
-                    style="margin-top:30px; border-top:2px solid #eee; padding-top:20px; padding-bottom:50px;">
+            <!-- PANEL: MATERIAL -->
+            <div id="panel-material" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">素材管理</div>
+                    <div class="header-controls">
+                        <button class="btn btn-outline" style="color:#4285F4; border-color:#4285F4;">＋
+                            Googleドライブ連携</button>
+                        <button class="btn btn-outline">＋ フォルダから追加</button>
+                        <div style="width:20px;"></div>
+                        <button class="btn btn-ai" id="btn-auto-tag">🏷️ AIでタグ付与</button>
+                        <span
+                            style="font-size:11px; color:#005662; background:#E0F7FA; padding:5px 10px; border-radius:15px; margin-left:10px; font-weight:bold; border:1px solid #B2EBF2;">
+                            💡 新しい写真はタグを付与してください。AIで自動付与も可能です。
+                        </span>
+                    </div>
+                </div>
+
+                <div class="material-summary-bar"
+                    style="display:flex; gap:15px; margin-bottom:15px; font-size:12px; color:#555; padding-left: 5px;">
+                    <span id="mat-summary-total">全素材: 0枚</span>
+                    <span style="color:#ccc;">|</span>
+                    <span id="mat-summary-tagged" style="color:#388E3C;">🏷️ タグ付与済: 0枚</span>
+                    <span style="color:#ccc;">|</span>
+                    <span id="mat-summary-untagged" style="color:#D32F2F;">⚠️ 未付与: 0枚</span>
+                </div>
+
+                <div class="material-grid" id="material-grid">
+                    <!-- JS injects images -->
+                </div>
+            </div>
+
+            <!-- PANEL: TEXT -->
+            <div id="panel-text" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">テキスト管理</div>
+                    <div class="header-controls">
+                        <button class="btn btn-ai" id="btn-text-gen-modal">✨ カテゴリからAI生成</button>
+                        <button class="btn btn-outline">＋ 新規テンプレート</button>
+                    </div>
+                </div>
+
+                <div id="txt-summary-bar" class="text-summary-bar"
+                    style="display:flex; gap:15px; margin-bottom:15px; font-size:12px; color:#555; padding-left: 5px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                    <!-- JS Injected -->
+                </div>
+
+                <!-- Main Container for Text Manager -->
+                <div id="text-manager-container" style="display:flex; height: 100%; gap:20px; overflow:hidden;">
+
+                    <!-- LEFT SIDEBAR: Folders -->
+                    <div id="txt-sidebar"
+                        style="width:200px; flex-shrink:0; border-right:1px solid #eee; padding-right:10px; overflow-y:auto;">
+                        <!-- JS Injected Folders -->
+                    </div>
+
+                    <!-- RIGHT MAIN: Texts -->
+                    <div id="txt-main-list" class="text-list" style="flex:1; overflow-y:auto; padding-bottom:50px;">
+                        <!-- JS Injected Items -->
+                    </div>
+
+                    <!-- FAR RIGHT: Composition Deck -->
+                    <div id="txt-deck"
+                        style="width:250px; flex-shrink:0; border-left:1px solid #eee; padding-left:10px; display:flex; flex-direction:column; background:#fafafa;">
+                        <div
+                            style="padding:10px 0; border-bottom:1px solid #ddd; margin-bottom:10px; font-weight:bold; font-size:13px; color:#333;">
+                            <span id="deck-count">構成案 (0)</span>
+                        </div>
+                        <div id="txt-deck-list" style="flex:1; overflow-y:auto; padding-bottom:10px;">
+                            <!-- Blocks go here -->
+                        </div>
+                        <div style="padding:10px 0;">
+                            <button id="btn-compose-ai" class="btn btn-ai" style="width:100%; font-size:11px;"
+                                disabled>パーツを選択してください</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANEL: HISTORY (MULTI-PLATFORM) -->
+            <div id="panel-history" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">自社投稿履歴 (Instagram / Google / X)</div>
+                    <div class="header-controls">
+                        <span style="font-size:12px; color:#666;">各プラットフォームの直近の投稿状況を確認できます</span>
+                        <div style="flex:1;"></div>
+                        <button class="btn btn-outline" onclick="alert('PDF出力機能は開発中です')">📄 レポート出力</button>
+                    </div>
+                </div>
+
+                <div id="history-grid"
+                    style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; height:100%; padding-bottom:50px;">
+                    <!-- JS Injects 3 Columns -->
+                </div>
+            </div>
+
+            <!-- PANEL: ANALYSIS -->
+            <div id="panel-analysis" class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">統計・分析</div>
+                    <div class="header-controls">
+                        <span style="font-size:12px; color:#666;">投稿パフォーマンスとAIによる分析結果</span>
+                    </div>
+                </div>
+
+                <div class="analysis-dashboard" style="padding-bottom:50px;">
                     <div
                         style="font-size:16px; font-weight:bold; margin-bottom:15px; display:flex; align-items:center;">
                         📊 分析・パターン生成サマリ (DEMIデータ)
@@ -368,171 +473,31 @@
                     </div>
                 </div>
             </div>
-
-            <!-- PANEL: MATERIAL -->
-            <div id="panel-material" class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">素材管理</div>
-                    <div class="header-controls">
-                        <button class="btn btn-outline" style="color:#4285F4; border-color:#4285F4;">＋
-                            Googleドライブ連携</button>
-                        <button class="btn btn-outline">＋ フォルダから追加</button>
-                        <div style="width:20px;"></div>
-                        <button class="btn btn-ai" id="btn-auto-tag">🏷️ AIでタグ付与</button>
-                        <span
-                            style="font-size:11px; color:#005662; background:#E0F7FA; padding:5px 10px; border-radius:15px; margin-left:10px; font-weight:bold; border:1px solid #B2EBF2;">
-                            💡 新しい写真はタグを付与してください。AIで自動付与も可能です。
-                        </span>
-                    </div>
+            <div class="bar-group" style="text-align:center;">
+                <div
+                    style="height: 200px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
                 </div>
+                <div style="font-size:10px; margin-top:5px;">日</div>
+            </div>
+        </div>
 
-                <div class="material-summary-bar"
-                    style="display:flex; gap:15px; margin-bottom:15px; font-size:12px; color:#555; padding-left: 5px;">
-                    <span id="mat-summary-total">全素材: 0枚</span>
-                    <span style="color:#ccc;">|</span>
-                    <span id="mat-summary-tagged" style="color:#388E3C;">🏷️ タグ付与済: 0枚</span>
-                    <span style="color:#ccc;">|</span>
-                    <span id="mat-summary-untagged" style="color:#D32F2F;">⚠️ 未付与: 0枚</span>
-                </div>
-
-                <div class="material-grid" id="material-grid">
-                    <!-- JS injects images -->
+        <div style="margin-top:20px; display:flex; gap:20px;">
+            <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
+                <h4 style="font-size:13px; margin-bottom:10px;">📈 エンゲージメント推移</h4>
+                <div
+                    style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
+                    (ラインチャートイメージ)
                 </div>
             </div>
-
-            <!-- PANEL: TEXT -->
-            <div id="panel-text" class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">テキスト管理</div>
-                    <div class="header-controls">
-                        <button class="btn btn-ai" id="btn-text-gen-modal">✨ カテゴリからAI生成</button>
-                        <button class="btn btn-outline">＋ 新規テンプレート</button>
-                    </div>
-                </div>
-
-                <div id="txt-summary-bar" class="text-summary-bar"
-                    style="display:flex; gap:15px; margin-bottom:15px; font-size:12px; color:#555; padding-left: 5px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                    <!-- JS Injected -->
-                </div>
-
-                <!-- Main Container for Text Manager -->
-                <div id="text-manager-container" style="display:flex; height: 100%; gap:20px; overflow:hidden;">
-
-                    <!-- LEFT SIDEBAR: Folders -->
-                    <div id="txt-sidebar"
-                        style="width:200px; flex-shrink:0; border-right:1px solid #eee; padding-right:10px; overflow-y:auto;">
-                        <!-- JS Injected Folders -->
-                    </div>
-
-                    <!-- RIGHT MAIN: Texts -->
-                    <div id="txt-main-list" class="text-list" style="flex:1; overflow-y:auto; padding-bottom:50px;">
-                        <!-- JS Injected Items -->
-                    </div>
-
-                    <!-- FAR RIGHT: Composition Deck -->
-                    <div id="txt-deck"
-                        style="width:250px; flex-shrink:0; border-left:1px solid #eee; padding-left:10px; display:flex; flex-direction:column; background:#fafafa;">
-                        <div
-                            style="padding:10px 0; border-bottom:1px solid #ddd; margin-bottom:10px; font-weight:bold; font-size:13px; color:#333;">
-                            <span id="deck-count">構成案 (0)</span>
-                        </div>
-                        <div id="txt-deck-list" style="flex:1; overflow-y:auto; padding-bottom:10px;">
-                            <!-- Blocks go here -->
-                        </div>
-                        <div style="padding:10px 0;">
-                            <button id="btn-compose-ai" class="btn btn-ai" style="width:100%; font-size:11px;"
-                                disabled>パーツを選択してください</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- PANEL: HISTORY (MULTI-PLATFORM) -->
-            <div id="panel-history" class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">自社投稿履歴 (Instagram / Google / X)</div>
-                    <div class="header-controls">
-                        <span style="font-size:12px; color:#666;">各プラットフォームの直近の投稿状況を確認できます</span>
-                        <div style="flex:1;"></div>
-                        <button class="btn btn-outline" onclick="alert('PDF出力機能は開発中です')">📄 レポート出力</button>
-                    </div>
-                </div>
-
-                <div id="history-grid"
-                    style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; height:100%; padding-bottom:50px;">
-                    <!-- JS Injects 3 Columns -->
-                </div>
-            </div>
-
-
-            <p style="font-size: 12px; color: #666; margin-bottom: 20px;">過去の投稿パフォーマンスと推奨投稿タイミングの分析結果です。</p>
-
-            <!-- Dummy Chart Area -->
-            <div
-                style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; height: 300px; display: flex; align-items: flex-end; justify-content: space-around;">
-                <!-- Simple CSS Bar Chart Mockup -->
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 150px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">月</div>
-                </div>
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 220px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">火</div>
-                </div>
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 180px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">水</div>
-                </div>
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 120px; width: 40px; background: #eee; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">木</div>
-                </div>
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 250px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">金</div>
-                </div>
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 280px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">土</div>
-                </div>
-                <div class="bar-group" style="text-align:center;">
-                    <div
-                        style="height: 200px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                    </div>
-                    <div style="font-size:10px; margin-top:5px;">日</div>
-                </div>
-            </div>
-
-            <div style="margin-top:20px; display:flex; gap:20px;">
-                <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
-                    <h4 style="font-size:13px; margin-bottom:10px;">📈 エンゲージメント推移</h4>
-                    <div
-                        style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
-                        (ラインチャートイメージ)
-                    </div>
-                </div>
-                <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
-                    <h4 style="font-size:13px; margin-bottom:10px;">👥 フォロワー属性</h4>
-                    <div
-                        style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
-                        (円グラフイメージ)
-                    </div>
+            <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
+                <h4 style="font-size:13px; margin-bottom:10px;">👥 フォロワー属性</h4>
+                <div
+                    style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
+                    (円グラフイメージ)
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
 

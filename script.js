@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initTabs() {
     const btns = document.querySelectorAll('.tab-btn');
-    const sections = ['panel-clients', 'panel-schedule', 'panel-material', 'panel-text', 'panel-history']; // Added clients
+    const sections = ['panel-clients', 'panel-schedule', 'panel-material', 'panel-text', 'panel-history', 'panel-analysis']; // Added clients & analysis
 
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -203,6 +203,7 @@ function initTabs() {
             if (target === 'material') renderMaterials();
             if (target === 'text') renderTexts();
             if (target === 'history') renderHistory();
+            // Analysis is static HTML for now, no render function needed yet
 
             APP_STATE.currentTab = target;
         });
