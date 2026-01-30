@@ -340,7 +340,7 @@
                     </div>
                 </div>
 
-                <div class="analysis-dashboard" style="padding-bottom:50px;">
+                <div class="analysis-dashboard" style="padding-bottom:50px; flex:1; overflow-y:auto;">
                     <div
                         style="margin-bottom:20px; background:linear-gradient(135deg, #E3F2FD 0%, #fff 100%); padding:20px; border-radius:12px; border:1px solid #BBDEFB;">
                         <div style="display:flex; align-items:flex-end; gap:15px; margin-bottom:10px;">
@@ -493,64 +493,118 @@
                             </div>
                         </div>
 
-                        <!-- Block B: Engagement Heatmap (Time x Day) -->
+                        <!-- Block B: Engagement Heatmap (Time x Day) - Granular 10 Cols -->
                         <div class="analysis-card"
                             style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px;">
                             <div style="font-size:12px; color:#666; margin-bottom:15px; font-weight:bold;">🔥 時間帯別
-                                エンゲージメントヒートマップ</div>
+                                エンゲージメントヒートマップ (10区分)</div>
 
+                            <!-- 10 Time Slots: 09, 10, 11, 12, 13, 14, 15, 16, 17, 18 -->
                             <div
-                                style="display:grid; grid-template-columns: 40px repeat(7, 1fr); gap:2px; font-size:9px; text-align:center; color:#888;">
+                                style="display:grid; grid-template-columns: 40px repeat(10, 1fr); gap:2px; font-size:9px; text-align:center; color:#888;">
                                 <!-- Header -->
                                 <div></div>
-                                <div>月</div>
-                                <div>火</div>
-                                <div>水</div>
-                                <div>木</div>
-                                <div>金</div>
-                                <div>土</div>
-                                <div>日</div>
+                                <div>09</div>
+                                <div>10</div>
+                                <div>11</div>
+                                <div>12</div>
+                                <div>13</div>
+                                <div>14</div>
+                                <div>15</div>
+                                <div>16</div>
+                                <div>17</div>
+                                <div>18</div>
 
-                                <!-- Rows -->
-                                <!-- 9-12 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">09-12</div>
+                                <!-- Mon -->
+                                <div style="display:flex; align-items:center; justify-content:center;">月</div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
                                 <div style="background:#E3F2FD;"></div>
                                 <div style="background:#BBDEFB;"></div>
                                 <div style="background:#1976D2;"></div>
                                 <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
 
-                                <!-- 12-15 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">12-15</div>
+                                <!-- Tue -->
+                                <div style="display:flex; align-items:center; justify-content:center;">火</div>
                                 <div style="background:#E3F2FD;"></div>
                                 <div style="background:#E3F2FD;"></div>
-                                <div style="background:#0D47A1;"></div>
                                 <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#BBDEFB;"></div>
                                 <div style="background:#2196F3;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#BBDEFB;"></div>
-
-                                <!-- 15-18 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">15-18</div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#BBDEFB;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#E3F2FD;"></div>
-                                <div style="background:#1976D2;"></div>
+                                <div style="background:#1565C0;"></div>
                                 <div style="background:#2196F3;"></div>
-
-                                <!-- 18-21 -->
-                                <div style="display:flex; align-items:center; justify-content:center;">18-21</div>
-                                <div style="background:#E3F2FD;"></div>
                                 <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+
+                                <!-- Wed -->
+                                <div style="display:flex; align-items:center; justify-content:center;">水</div>
+                                <div style="background:#E3F2FD;"></div>
                                 <div style="background:#E3F2FD;"></div>
                                 <div style="background:#2196F3;"></div>
                                 <div style="background:#0D47A1;"></div>
                                 <div style="background:#1565C0;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+
+                                <!-- Thu -->
+                                <div style="display:flex; align-items:center; justify-content:center;">木</div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+
+                                <!-- Fri -->
+                                <div style="display:flex; align-items:center; justify-content:center;">金</div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#2196F3;"></div>
                                 <div style="background:#1976D2;"></div>
+                                <div style="background:#0D47A1;"></div>
+                                <div style="background:#1565C0;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#BBDEFB;"></div>
+
+                                <!-- Sat -->
+                                <div style="display:flex; align-items:center; justify-content:center;">土</div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#1976D2;"></div>
+                                <div style="background:#1565C0;"></div>
+                                <div style="background:#0D47A1;"></div>
+                                <div style="background:#1565C0;"></div>
+                                <div style="background:#1976D2;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+
+                                <!-- Sun -->
+                                <div style="display:flex; align-items:center; justify-content:center;">日</div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#2196F3;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#E3F2FD;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#BBDEFB;"></div>
+                                <div style="background:#E3F2FD;"></div>
                             </div>
                             <div
                                 style="display:flex; justify-content:flex-end; gap:5px; margin-top:10px; font-size:9px; align-items:center;">
