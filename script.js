@@ -117,7 +117,8 @@ let APP_STATE = {
     currentTab: 'clients',
     currentMonthFilter: '2026-02', // YYYY-MM
     selectedScheduleId: null,
-    activeTextCategory: 'all' // 'all' or specific category name
+    activeTextCategory: 'all', // 'all' or specific category name
+    selectedTextBlocks: [] // Array of text objects for composition
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -658,6 +659,7 @@ function renderTexts() {
     }
 
     // Render Main List
+    // Render Main List
     const list = document.getElementById('txt-main-list');
     if (list) {
         list.innerHTML = '';
@@ -669,7 +671,15 @@ function renderTexts() {
 
         targetData.forEach(t => {
             const item = document.createElement('div');
-            item.className = 'text-card'; // Reuse existing class
+            item.className = 'text-card';
+
+            // Highlight if already selected
+            const isSelected = APP_STATE.selectedTextBlocks.find(b => b.id === t.id);
+            if (isSelected) {
+                item.style.border = "2px solid #0095F6";
+                item.style.background = "#E3F2FD";
+            }
+
             // Add Type Badge
             const typeColor = t.type === '本文' ? '#E3F2FD' : '#FFF3E0';
             const typeText = t.type === '本文' ? '#1565C0' : '#EF6C00';
@@ -682,12 +692,88 @@ function renderTexts() {
                 <div style="font-size:10px; color:#666; margin-bottom:8px;">📁 ${t.category}</div>
                 <p style="font-size:12px; color:#444; white-space:pre-wrap; max-height:60px; overflow:hidden;">${t.content}</p>
                 <div style="margin-top:8px; border-top:1px solid #eee; padding-top:4px; font-size:10px; color:#888; text-align:right;">
-                    使用: ${t.usageCount}回
+                    <button class="btn btn-outline" style="padding:2px 8px; font-size:10px;">${isSelected ? '除去' : '＋ 構成に追加'}</button>
                 </div>
             `;
+
+            item.onclick = () => {
+                if (isSelected) {
+                    APP_STATE.selectedTextBlocks = APP_STATE.selectedTextBlocks.filter(b => b.id !== t.id);
+                } else {
+                    APP_STATE.selectedTextBlocks.push(t);
+                }
+                renderTexts();
+            };
+
             list.appendChild(item);
         });
     }
+
+    // Render Composition Deck
+    const deck = document.getElementById('txt-deck-list');
+    const deckCountEl = document.getElementById('deck-count');
+    if (deck && deckCountEl) {
+        deck.innerHTML = '';
+        deckCountEl.textContent = `構成案 (${APP_STATE.selectedTextBlocks.length})`;
+
+        if (APP_STATE.selectedTextBlocks.length === 0) {
+            deck.innerHTML = `<div style="text-align:center; color:#ccc; font-size:12px; padding:20px;">
+                左のリストから<br>パーツを選んでください
+            </div>`;
+        } else {
+            APP_STATE.selectedTextBlocks.forEach((block, idx) => {
+                const dItem = document.createElement('div');
+                dItem.className = 'deck-item';
+                dItem.style.cssText = "background:white; border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; font-size:12px; position:relative;";
+                dItem.innerHTML = `
+                    <div style="font-weight:bold; margin-bottom:4px; color:#333;">${idx + 1}. ${block.title}</div>
+                    <div style="color:#666; font-size:11px; max-height:40px; overflow:hidden;">${block.content}</div>
+                    <div style="text-align:right; margin-top:5px; font-size:10px; color:#d32f2f; cursor:pointer;" onclick="event.stopPropagation(); removeFromDeck('${block.id}')">✕ 削除</div>
+                `;
+                deck.appendChild(dItem);
+
+                // Draw arrow if not last
+                if (idx < APP_STATE.selectedTextBlocks.length - 1) {
+                    const arrow = document.createElement('div');
+                    arrow.style.textAlign = 'center';
+                    arrow.style.color = '#ccc';
+                    arrow.innerHTML = '▼';
+                    deck.appendChild(arrow);
+                }
+            });
+        }
+
+        // Bind Compose Button
+        const btnCompose = document.getElementById('btn-compose-ai');
+        if (btnCompose) {
+            btnCompose.onclick = combineWithAI;
+            btnCompose.disabled = APP_STATE.selectedTextBlocks.length === 0;
+            btnCompose.textContent = APP_STATE.selectedTextBlocks.length > 0 ? "✨ AIで自然な文章に結合" : "パーツを選択してください";
+        }
+    }
+}
+
+function removeFromDeck(id) {
+    APP_STATE.selectedTextBlocks = APP_STATE.selectedTextBlocks.filter(b => b.id !== id);
+    renderTexts();
+}
+
+async function combineWithAI() {
+    const btn = document.getElementById('btn-compose-ai');
+    btn.textContent = "AIが思考中...";
+    btn.disabled = true;
+
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Simple Concatenation logic mock
+    const combined = APP_STATE.selectedTextBlocks.map(b => b.content).join("\n\n");
+    const refined = `【AI編集済み】\n\n${combined}\n\n(※AIが文脈を調整し、自然な流れに整えました)`;
+
+    alert("文章を作成しました！\n\n" + refined);
+    // In a real app, this would open the editor or save as a new draft.
+
+    btn.textContent = "✨ AIで自然な文章に結合";
+    btn.disabled = false;
 }
 
 
