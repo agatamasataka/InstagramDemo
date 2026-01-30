@@ -293,7 +293,7 @@ function renderSchedule() {
         const approvedPct = total > 0 ? Math.round((approved / total) * 100) : 0;
 
         titleEl.innerHTML = `
-            進行管理 
+            投稿管理コクピット 
             <span style="font-size:12px; font-weight:normal; margin-left:15px; color:#666;">
                 投稿完了: <span style="font-weight:bold; color:#43A047;">${completed}/${total}件 (${completedPct}%)</span>
                 <span style="margin:0 10px; color:#ccc;">|</span>
