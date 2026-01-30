@@ -73,6 +73,8 @@ body {
     gap: 10px;
     overflow: hidden;
     position: relative;
+    min-height: 0;
+    /* Important for nested flex scrolling */
 }
 
 /* Panels */
@@ -80,9 +82,11 @@ body {
     display: none;
     flex: 1;
     flex-direction: column;
-    height: 100%;
-    min-width: 0; /* Critical for flex scrolling */
-    min-height: 0; /* Critical for flex scrolling */
+    /* height: 100%; Removed to let flex handle it */
+    min-width: 0;
+    /* Critical for flex scrolling */
+    min-height: 0;
+    /* Critical for flex scrolling */
 }
 
 .panel.active {
@@ -867,4 +871,23 @@ body {
     left: 50%;
     transform: translateX(-50%);
     border-radius: 0 0 10px 10px;
+}
+
+/* Custom Scrollbar (Global) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
