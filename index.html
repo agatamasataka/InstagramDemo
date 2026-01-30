@@ -147,6 +147,103 @@
                         <!-- JS injects rows -->
                     </div>
                 </div>
+
+                <!-- ANALYSIS DASHBOARD (DEMI Data & Pattern Analysis) -->
+                <div class="analysis-dashboard"
+                    style="margin-top:30px; border-top:2px solid #eee; padding-top:20px; padding-bottom:50px;">
+                    <div
+                        style="font-size:16px; font-weight:bold; margin-bottom:15px; display:flex; align-items:center;">
+                        📊 分析・パターン生成サマリ (DEMIデータ)
+                        <span
+                            style="font-size:11px; margin-left:10px; background:#E3F2FD; color:#1565C0; padding:2px 8px; border-radius:10px;">AI
+                            Analysis</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
+                        <!-- Col 1: Performance -->
+                        <div class="analysis-card"
+                            style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px;">
+                            <div style="font-size:12px; color:#666; margin-bottom:10px; font-weight:bold;">📈 投稿パフォーマンス
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; border-bottom:1px solid #f5f5f5; padding-bottom:5px; margin-bottom:5px;">
+                                <span style="font-size:11px;">総投稿数</span>
+                                <span style="font-weight:bold; font-size:14px;">1,248</span>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; border-bottom:1px solid #f5f5f5; padding-bottom:5px; margin-bottom:5px;">
+                                <span style="font-size:11px;">今月の投稿</span>
+                                <span style="font-weight:bold; font-size:14px;">24</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span style="font-size:11px;">週平均</span>
+                                <span style="font-weight:bold; font-size:14px;">5.6回</span>
+                            </div>
+                        </div>
+
+                        <!-- Col 2: Assets -->
+                        <div class="analysis-card"
+                            style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px;">
+                            <div style="font-size:12px; color:#666; margin-bottom:10px; font-weight:bold;">📦 保有アセット資産
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; border-bottom:1px solid #f5f5f5; padding-bottom:5px; margin-bottom:5px;">
+                                <span style="font-size:11px;">素材 (画像/動画)</span>
+                                <span style="font-weight:bold; font-size:14px;">148枚</span>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; border-bottom:1px solid #f5f5f5; padding-bottom:5px; margin-bottom:5px;">
+                                <span style="font-size:11px;">テキスト文章</span>
+                                <span style="font-weight:bold; font-size:14px;">50件</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span style="font-size:11px;">カテゴリー</span>
+                                <span style="font-weight:bold; font-size:14px;">5種</span>
+                            </div>
+                        </div>
+
+                        <!-- Col 3: Pattern AI -->
+                        <div class="analysis-card"
+                            style="background:#fff; border:1px solid #eee; border-radius:8px; padding:15px; position:relative; overflow:hidden;">
+                            <div
+                                style="position:absolute; top:-10px; right:-10px; width:50px; height:50px; background:#E0F7FA; border-radius:50%;">
+                            </div>
+                            <div
+                                style="font-size:12px; color:#006064; margin-bottom:10px; font-weight:bold; position:relative;">
+                                ✨ AIパターン生成力</div>
+
+                            <div style="text-align:center; margin-top:5px;">
+                                <div style="font-size:10px; color:#666;">現在のアセット組み合わせ</div>
+                                <div style="font-size:24px; font-weight:bold; color:#00838F;">7,400<span
+                                        style="font-size:12px; color:#666;">通り</span></div>
+                                <div style="font-size:9px; color:#888; margin-bottom:8px;">(テキスト50 × 画像148)</div>
+
+                                <div style="font-size:10px; color:#666;">生成済みAIバリエーション</div>
+                                <div style="font-size:14px; font-weight:bold; color:#333;">+ 320<span
+                                        style="font-size:10px; font-weight:normal;">パターン</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Placeholder -->
+                    <div
+                        style="margin-top:20px; background:#fafafa; border:1px dashed #ccc; padding:20px; border-radius:8px; text-align:center;">
+                        <div style="color:#888; font-size:12px; margin-bottom:10px;">推奨投稿タイミング分析 (ヒートマップ)</div>
+                        <div style="height:100px; display:flex; align-items:flex-end; justify-content:center; gap:5px;">
+                            <!-- Dummy Bars -->
+                            <div style="width:20px; height:30%; background:#CFD8DC;"></div>
+                            <div style="width:20px; height:50%; background:#B0BEC5;"></div>
+                            <div style="width:20px; height:80%; background:#29B6F6;"></div>
+                            <div style="width:20px; height:100%; background:#0288D1;"></div> <!-- Best -->
+                            <div style="width:20px; height:60%; background:#29B6F6;"></div>
+                            <div style="width:20px; height:40%; background:#B0BEC5;"></div>
+                            <div style="width:20px; height:20%; background:#CFD8DC;"></div>
+                        </div>
+                        <div style="font-size:10px; color:#666; margin-top:5px;">
+                            最もエンゲージメントが高い時間帯: <span style="font-weight:bold; color:#0288D1;">水曜 12:00 / 金曜 20:00</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- PANEL: MATERIAL -->
@@ -245,78 +342,75 @@
                 </div>
             </div>
 
-            <!-- DEMI / Elevation Analysis Area -->
-            <div id="elevation-analysis-section"
-                style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px;">
-                <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;">📉 標高分析 (DEMIデータ)</h3>
-                <p style="font-size: 12px; color: #666; margin-bottom: 20px;">過去の投稿パフォーマンスと推奨投稿タイミングの分析結果です。</p>
 
-                <!-- Dummy Chart Area -->
-                <div
-                    style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; height: 300px; display: flex; align-items: flex-end; justify-content: space-around;">
-                    <!-- Simple CSS Bar Chart Mockup -->
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 150px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">月</div>
+            <p style="font-size: 12px; color: #666; margin-bottom: 20px;">過去の投稿パフォーマンスと推奨投稿タイミングの分析結果です。</p>
+
+            <!-- Dummy Chart Area -->
+            <div
+                style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; height: 300px; display: flex; align-items: flex-end; justify-content: space-around;">
+                <!-- Simple CSS Bar Chart Mockup -->
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 150px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
                     </div>
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 220px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">火</div>
+                    <div style="font-size:10px; margin-top:5px;">月</div>
+                </div>
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 220px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
                     </div>
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 180px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">水</div>
+                    <div style="font-size:10px; margin-top:5px;">火</div>
+                </div>
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 180px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
                     </div>
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 120px; width: 40px; background: #eee; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">木</div>
+                    <div style="font-size:10px; margin-top:5px;">水</div>
+                </div>
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 120px; width: 40px; background: #eee; margin: 0 auto; border-radius: 4px 4px 0 0;">
                     </div>
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 250px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">金</div>
+                    <div style="font-size:10px; margin-top:5px;">木</div>
+                </div>
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 250px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
                     </div>
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 280px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">土</div>
+                    <div style="font-size:10px; margin-top:5px;">金</div>
+                </div>
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 280px; width: 40px; background: #FB8C00; margin: 0 auto; border-radius: 4px 4px 0 0;">
                     </div>
-                    <div class="bar-group" style="text-align:center;">
-                        <div
-                            style="height: 200px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
-                        </div>
-                        <div style="font-size:10px; margin-top:5px;">日</div>
+                    <div style="font-size:10px; margin-top:5px;">土</div>
+                </div>
+                <div class="bar-group" style="text-align:center;">
+                    <div
+                        style="height: 200px; width: 40px; background: #33B9BB; margin: 0 auto; border-radius: 4px 4px 0 0;">
+                    </div>
+                    <div style="font-size:10px; margin-top:5px;">日</div>
+                </div>
+            </div>
+
+            <div style="margin-top:20px; display:flex; gap:20px;">
+                <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
+                    <h4 style="font-size:13px; margin-bottom:10px;">📈 エンゲージメント推移</h4>
+                    <div
+                        style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
+                        (ラインチャートイメージ)
                     </div>
                 </div>
-
-                <div style="margin-top:20px; display:flex; gap:20px;">
-                    <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
-                        <h4 style="font-size:13px; margin-bottom:10px;">📈 エンゲージメント推移</h4>
-                        <div
-                            style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
-                            (ラインチャートイメージ)
-                        </div>
-                    </div>
-                    <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
-                        <h4 style="font-size:13px; margin-bottom:10px;">👥 フォロワー属性</h4>
-                        <div
-                            style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
-                            (円グラフイメージ)
-                        </div>
+                <div style="flex:1; background:white; padding:15px; border-radius:8px; border:1px solid #eee;">
+                    <h4 style="font-size:13px; margin-bottom:10px;">👥 フォロワー属性</h4>
+                    <div
+                        style="height:100px; background:#fafafa; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">
+                        (円グラフイメージ)
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     </div>
